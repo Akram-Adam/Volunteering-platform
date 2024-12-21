@@ -1,0 +1,11 @@
+/* This file will containe the data as prameter to run the App */
+/* every line will have the key and the value */
+/* key = value */
+/* mood : value to can be test or run */
+
+dp = VolunConnect_dev_dp
+dpuser = VolunConnect_admin_app_dev
+dpuserpass = VolunConnect_admin_app_pass
+host = localhost
+mood = test
+
