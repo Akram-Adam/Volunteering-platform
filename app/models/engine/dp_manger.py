@@ -19,7 +19,6 @@ class DBStorage:
     def __init__(self):
         """ Constructor of the class make instance database """
         configdata= get_Config_data('config.txt')
-        
 
         mysql_user = configdata['dpuser']
         mysql_pwd = configdata['dpuserpass']
@@ -179,7 +178,7 @@ class DBStorage:
     def close(self):
         """ Close the session """
         self.__session.rollback()  # In case there's a pending transaction
-        self.__session.close()     # Cl
+        self.__session.close()     # Close
 
     def get_data(self, class_name, attrib):
         """
@@ -191,7 +190,6 @@ class DBStorage:
         # Mapping of class names to class objects
         classes = {
             'User': User
-            
         }
 
         if class_name in classes:
@@ -215,4 +213,3 @@ class DBStorage:
                     raise AttributeError(f"{class_name} has no attribute '{attribute_name}'")
         else:
             raise ValueError(f"Class '{class_name}' not found in available classes.")
-        
