@@ -1,0 +1,43 @@
+services:
+  backend:
+    build:
+      context: ./flask-backend
+      dockerfile: Dockerfile
+    container_name: flask_backend
+    volumes:
+      - ./flask-backend:/app  # Bind mount for live updates
+    ports:
+      - "5000:5000"
+    environment:
+      FLASK_ENV: development
+      DATABASE_URL: mysql://dev_user:dev_password@mysql:3306/dev_db
+    depends_on:
+      - mysql
+
+  frontend:
+    build:
+      context: ./vue-frontend
+      dockerfile: Dockerfile
+    container_name: vue_frontend
+    volumes:
+      - ./vue-frontend:/app  # Bind mount for live updates
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+
+  mysql:
+    image: mysql:8
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: dev_db
+      MYSQL_USER: dev_user
+      MYSQL_PASSWORD: dev_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  mysql_data:
