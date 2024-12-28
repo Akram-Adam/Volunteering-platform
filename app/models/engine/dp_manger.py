@@ -7,6 +7,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.exc import NoSuchTableError, OperationalError, ProgrammingError
 from app.models.extra.extrafile import get_Config_data
 from app.models.base_model import Base, BaseModel
+from app.models.user import User
 
 
 
@@ -159,26 +160,27 @@ class DBStorage:
 
     #     return (emailres, usernameres)
 
-    # def getuser(self, usernameoremail):
-    #     """ Get user object """
-    #     if self.__session.is_active: #check if the session is open
-    #         try:
-    #             if usernameoremail: # Check if and 
-    #                 objects = self.__session.query(User).filter(or_(User.username == usernameoremail, User.email == usernameoremail)).first()
-    #                 return objects
+    def getuser(self, usernameoremail):
+        """ Get user object """
+        if self.__session.is_active: #check if the session is open
+            try:
+                if usernameoremail: # Check if and 
+                    objects = self.__session.query(User).filter(or_(User.username == usernameoremail, User.email == usernameoremail)).first()
+                    return objects
 
-    #         except NoSuchTableError as no_table:  #incase we wanna test where the error
-    #             return
-    #         except OperationalError as OP_Error:
-    #             pass
-    #         except ProgrammingError as API_Error:
-    #             pass
-    #     return
+            except NoSuchTableError as no_table:  #incase we wanna test where the error
+                return
+            except OperationalError as OP_Error:
+                pass
+            except ProgrammingError as API_Error:
+                pass
+        return
 
     def close(self):
         """ Close the session """
         self.__session.rollback()  # In case there's a pending transaction
         self.__session.close()     # Close
+
 
     def get_data(self, class_name, attrib):
         """
@@ -197,7 +199,7 @@ class DBStorage:
                 # Split the attribute into key and value
                 attribute_data = attrib.split('=')
                 if len(attribute_data) != 2:
-                    raise ValueError("Attribute must be in the format 'attribute=value'")
+                    raise ValueError("Attribute must be in the format 'attribute=value'")   
 
                 attribute_name, attribute_value = attribute_data
 
