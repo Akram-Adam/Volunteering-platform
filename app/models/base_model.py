@@ -10,7 +10,7 @@ from sqlalchemy import Column, Integer, String, create_engine, ForeignKey
 from sqlalchemy import CHAR, DateTime, func
 from sqlalchemy.orm import declarative_base
 from app.models.extra.extrafile import is_list_part_of
-from app.models import dp_incetnace
+from app.models import db_session
 from app.models.engine.Errorevent import ERROR_EVENT
 
 Base = declarative_base()
@@ -68,21 +68,18 @@ class BaseModel:
         """
         Update databse by the new element "Object"
         """
-        from models import dp_incetnace
-        dp_incetnace.new(self)
-        dp_incetnace.save()
+        db_session.new(self)
+        db_session.save()
 
 
     def delete(self):
         """
         Delete the object from database
         """
-        from models import dp_incetnace
-        dp_incetnace.delete(self)
+        db_session.delete(self)
 
 
     def update(self, **kwargs):
-        from models import dp_incetnace
         """ Method for update data attribute """
         if 'id' in kwargs:
             """ Drop The request """
@@ -101,7 +98,7 @@ class BaseModel:
         else:
             return ERROR_EVENT(maasage="You can't update, data not compatible", code='0.5.3', typeevent='Usererror')
 
-        dp_incetnace.save()
+        db_session.save()
 
 
     def to_dict(self):

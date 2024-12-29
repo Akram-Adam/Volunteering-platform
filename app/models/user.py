@@ -1,5 +1,6 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
+from sqlalchemy.orm import relationship
 import bcrypt
 
 """This gonna be user logic module for the app"""
@@ -19,6 +20,7 @@ class User(BaseModel, Base):
     zip_code = Column(String(128), nullable=True)
     status = Column(String(128), nullable=True) # active, inactive :: default inactive change to active after email verification
     role = Column(String(128), nullable=True) # admin, user
+    profile = relationship('profiles', back_populates='user')
 
     """Initializes a user
     Args:
@@ -85,7 +87,7 @@ class User(BaseModel, Base):
     #     # Check the lengnth of the password
     #     if not (len(password) >= 8 and len(password) < 61):
     #         return ERROR_EVENT(maasage=" The password length is out of the range ", code='1.1.0', typeevent='Usererror')
-    
+
     #     # Check if the password has Number
     #     if not any(char.isdigit() for char in password):
     #         return ERROR_EVENT(maasage=" No digits ", code='1.1.1', typeevent='Usererror')
@@ -128,10 +130,4 @@ class User(BaseModel, Base):
     #             if not (len(username) > 0 and len(username) < 256):
     #                 return ERROR_EVENT(maasage=" The username length is Out of the range ", code='1.2.3', typeevent='Usererror')
     #     return True
-
-    
-
-        
-     
-    
-    
+ 

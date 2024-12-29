@@ -165,7 +165,7 @@ class DBStorage:
         if self.__session.is_active: #check if the session is open
             try:
                 if usernameoremail: # Check if and 
-                    objects = self.__session.query(User).filter(or_(User.username == usernameoremail, User.email == usernameoremail)).first()
+                    objects = self.__session.query(User).filter(User.email == usernameoremail).first()
                     return objects
 
             except NoSuchTableError as no_table:  #incase we wanna test where the error
