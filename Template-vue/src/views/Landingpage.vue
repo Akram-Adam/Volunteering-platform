@@ -1,18 +1,7 @@
 <template>
   <div class="landing-page">
-    <!-- nav bar-->
-    <nav class="bg-[#213555] text-white p-4 flex justify-between items-center">
-      <div class="text-lg font-bold">Our Volunteer Platform</div>
-      <div class="space-x-4">
-        <button class="bg-[#3E5879] text-white px-4 py-2 rounded hover:bg-[#D8C4B6] transition">
-          Log In
-        </button>
-        <button class="bg-[#3E5879] text-white px-4 py-2 rounded hover:bg-[#D8C4B6] transition">
-          Sign Up
-        </button>
-      </div>
-    </nav>
-
+    <!-- Header-->
+    <PageHeaderHeader />
     <!-- (Hero Section) -->
     <section class="hero-section bg-[#3E5879] text-[#F5EFE7] text-center py-20">
       <div class="container mx-auto">
@@ -28,7 +17,7 @@
         </button>
       </div>
     </section>
-    <section class="features-section py-10 bg-[#F5EFE7]">
+    <section class="features-section py-10 bg-[#e5e5e5]">
       <div class="container mx-auto text-center">
         <h2 class="text-3xl font-bold mb-8 text-[#213555]"></h2>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -60,9 +49,9 @@
       </div>
     </section>
 
-    <section class="testimonials-section py-10 bg-[#D8C4B6]">
+    <section class="testimonials-section py-10 bg-[#3E5879]">
       <div class="container mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-8 text-[#213555]">Inspiring Success Stories</h2>
+        <h2 class="text-3xl font-bold mb-8 text-[white] animate-pulse">Inspiring Success Stories</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <blockquote class="bg-white shadow-md rounded-lg p-6">
             <p class="italic mb-4">
@@ -83,15 +72,15 @@
       </div>
     </section>
 
-    <section class="call-to-action-section bg-[#3E5879] text-[#F5EFE7] text-center py-10">
+    <section class="call-to-action-section bg-[#e5e5e5] text-[#F5EFE7] text-center py-10">
       <div class="container mx-auto">
-        <h2 class="text-3xl font-bold mb-4">Be part of the change</h2>
-        <p class="text-lg mb-6">
+        <h2 class="text-3xl font-bold mb-4 text-[green]">Be part of the change</h2>
+        <p class="text-lg mb-6 text-[#3E5879]">
           Join thousands of volunteers working to create new opportunities and build stronger
           communities.
         </p>
         <button
-          class="bg-[#D8C4B6] text-[#213555] px-6 py-3 rounded-lg hover:bg-[#F5EFE7] transition"
+          class="bg-[#e11d48] text-[white] px-6 py-3 rounded-3xl hover:bg-[#3E6333] transition"
         >
           GET STARTED
         </button>
@@ -99,13 +88,12 @@
     </section>
 
     <!-- التذييل -->
-    <footer class="footer bg-[#213555] text-[#F5EFE7] text-center py-4">
-      <p class="mb-0">&copy; © 2024 Our Volunteer Platform - All Rights Reserved.</p>
-    </footer>
   </div>
 </template>
 
 <script>
+import PageHeader from '@/components/PageHeader.vue';
+
 export default {
   name: 'LandingPage',
   methods: {
