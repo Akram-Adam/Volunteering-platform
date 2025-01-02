@@ -1,108 +1,88 @@
 <template>
-  <div class="signup-page max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold mb-6 text-center">Sign Up</h2>
-
-    <!-- Sign-up Form -->
-    <form @submit.prevent="handleSubmit">
-      <div class="mb-4">
-        <label for="name" class="block font-semibold mb-2">Full Name</label>
-        <input
-          v-model="user.name"
-          id="name"
-          type="text"
-          class="w-full p-2 border rounded"
-          placeholder="Enter your full name"
-          required
-        />
-      </div>
-
-      <div class="mb-4">
-        <label for="email" class="block font-semibold mb-2">Email</label>
-        <input
-          v-model="user.email"
-          id="email"
-          type="email"
-          class="w-full p-2 border rounded"
-          placeholder="Enter your email"
-          required
-        />
-      </div>
-
-      <div class="mb-4">
-        <label for="password" class="block font-semibold mb-2">Password</label>
-        <input
-          v-model="user.password"
-          id="password"
-          type="password"
-          class="w-full p-2 border rounded"
-          placeholder="Enter your password"
-          required
-        />
-      </div>
-
-      <div class="mb-4">
-        <label for="userType" class="block font-semibold mb-2">User Type</label>
-        <select
-          v-model="user.userType"
-          id="userType"
-          class="w-full p-2 border rounded"
-          required
+  <div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
+      <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Sign Up</h2>
+      <form @submit.prevent="handleSignUp">
+        <div class="mb-4">
+          <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+          <input
+            v-model="name"
+            type="text"
+            id="name"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+          <input
+            v-model="email"
+            type="email"
+            id="email"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+          <input
+            v-model="phone"
+            type="tel"
+            id="phone"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+          <input
+            v-model="password"
+            type="password"
+            id="password"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-[#3E5879]  text-white py-2 px-4 rounded-lg shadow-md hover:bg-indigo-700 transition"
         >
-          <option value="volunteer">Volunteer</option>
-          <option value="requester">Requester</option>
-        </select>
-      </div>
-
-      <button
-        type="submit"
-        class="w-full bg-[#3E5879] text-white py-2 rounded hover:bg-blue-600 transition"
-      >
-        Sign Up
-      </button>
-
-      <p class="mt-4 text-center">
-        Already have an account? <router-link to="/login" class="text-blue-500">Login here</router-link>
-      </p>
-    </form>
+          Sign Up
+        </button>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { UserService } from '@/services/UserService'; // Assuming you have a service for API calls
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
-  name: 'SignUp',
+  name: "SignUp",
   setup() {
-    const user = ref({
-      name: '',
-      email: '',
-      password: '',
-      userType: 'volunteer', // Default to volunteer
-    });
-
     const router = useRouter();
+    const name = ref("");
+    const email = ref("");
+    const phone = ref(""); // New field for phone number
+    const password = ref("");
 
-    const handleSubmit = async () => {
-      try {
-        // Call to the UserService to register the user
-        await UserService.signUp(user.value);
-        // Redirect to login page after successful sign-up
-        router.push('/login');
-      } catch (error) {
-        alert('Failed to sign up. Please try again.');
-      }
+    const handleSignUp = () => {
+      // Mock storing user details in a backend or database
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          name: name.value,
+          email: email.value,
+          phone: phone.value, // Save phone number
+          password: password.value,
+        })
+      );
+      alert("Sign-up successful! Please log in.");
+      router.push("/login");
     };
 
-    return { user, handleSubmit };
+    return { name, email, phone, password, handleSignUp };
   },
 };
 </script>
-
-<style scoped>
-.signup-page {
-  font-family: Arial, sans-serif;
-  max-width: 500px;
-}
-</style>

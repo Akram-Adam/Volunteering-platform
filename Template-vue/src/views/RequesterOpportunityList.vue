@@ -1,101 +1,122 @@
 <template>
-  <div class="opportunity-list-page bg-gray-100 min-h-screen">
-    <!-- Header Section -->
-    <header class="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-6 text-center">
-      <h1 class="text-3xl font-bold">Explore Opportunities</h1>
-      <p class="text-lg mt-2">Find and request volunteer opportunities that suit your needs!</p>
-    </header>
+  <div class="opportunity-list-page p-6">
+    <h1 class="text-3xl font-bold mb-6">Available Opportunities</h1>
 
-    <!-- Opportunity Cards Section -->
-    <div v-if="loading" class="p-6 text-center text-gray-600">Loading opportunities...</div>
-    <div v-else class="opportunity-cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-      <div
-        v-for="opportunity in opportunities"
-        :key="opportunity.id"
-        class="bg-white p-4 rounded shadow hover:shadow-lg transition"
+    <!-- Search and Filter Section -->
+    <div class="mb-6 flex flex-wrap gap-4">
+      <input
+        v-model="searchQuery"
+        type="text"
+        placeholder="Search opportunities..."
+        class="p-2 border rounded w-full md:w-1/3"
+      />
+      <select
+        v-model="selectedCategory"
+        class="p-2 border rounded w-full md:w-1/3"
       >
-        <h2 class="text-xl font-bold mb-2">{{ opportunity.title }}</h2>
-        <p class="text-gray-700">{{ opportunity.description }}</p>
-        <div class="text-sm text-gray-500 mt-2">
-          <p>Location: {{ opportunity.location }}</p>
-          <p>Availability: {{ opportunity.availability }}</p>
-        </div>
-        <button
-          class="mt-4 bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600"
-          @click="requestOpportunity(opportunity.id)"
-          :disabled="requestingId === opportunity.id"
+        <option value="">All Categories</option>
+        <option value="education">Education</option>
+        <option value="environment">Environment</option>
+        <option value="health">Health</option>
+      </select>
+    </div>
+
+    <!-- Opportunity List -->
+    <div v-if="filteredOpportunities.length" class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div
+        v-for="opportunity in filteredOpportunities"
+        :key="opportunity.id"
+        class="p-6 bg-white rounded-lg shadow-md"
+      >
+        <h2 class="text-xl font-semibold">{{ opportunity.title }}</h2>
+        <p class="text-gray-600 mb-2">{{ opportunity.description }}</p>
+        <p class="text-sm text-gray-500 mb-2">
+          <strong>Category:</strong> {{ opportunity.category }}
+        </p>
+        <p class="text-sm text-gray-500 mb-2">
+          <strong>Location:</strong> {{ opportunity.location }}
+        </p>
+        <p class="text-sm text-gray-500 mb-2">
+          <strong>Date:</strong> {{ opportunity.availability }}
+        </p>
+        <p
+          class="text-sm text-gray-500 mb-4"
+          :class="{ 'text-red-500': isOpportunityFull(opportunity) }"
         >
-          <span v-if="requestingId === opportunity.id">Requesting...</span>
-          <span v-else>Request Opportunity</span>
+          <strong>Spots Left:</strong> {{
+            opportunity.maxRequesters - opportunity.currentRequesters
+          }}
+        </p>
+        <button
+          :disabled="isOpportunityFull(opportunity)"
+          @click="requestOpportunity(opportunity)"
+          class="px-4 py-2 rounded text-white transition"
+          :class="{
+            'bg-blue-500 hover:bg-blue-600': !isOpportunityFull(opportunity),
+            'bg-gray-400 cursor-not-allowed': isOpportunityFull(opportunity),
+          }"
+        >
+          {{ isOpportunityFull(opportunity) ? 'Full' : 'Request' }}
         </button>
       </div>
     </div>
+
+    <p v-else class="text-center text-gray-600">No opportunities available.</p>
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-import axios from "axios";
+import { ref, computed } from "vue";
+import mockOpportunities from "@/data/mockOpportunities"; // Import mock data
 
 export default {
-  name: "OpportunityList",
+  name: "RequesterOpportunityList",
   setup() {
-    const opportunities = ref([]);
-    const loading = ref(true);
-    const requestingId = ref(null);
+    const opportunities = ref(mockOpportunities);
+    const searchQuery = ref("");
+    const selectedCategory = ref("");
 
-    const fetchOpportunities = async () => {
-      loading.value = true;
-      // Mock opportunity data
-      setTimeout(() => {
-        opportunities.value = [
-          {
-            id: 1,
-            title: "Community Clean-up",
-            description: "Help us clean up our local park and make it beautiful again.",
-            location: "City Park",
-            availability: "January 15, 2024",
-          },
-          {
-            id: 2,
-            title: "Food Bank Volunteer",
-            description: "Assist in sorting and distributing food to families in need.",
-            location: "Downtown Food Bank",
-            availability: "January 20, 2024",
-          },
-        ];
-        loading.value = false;
-      }, 1000);
-    };
+    const filteredOpportunities = computed(() => {
+      return opportunities.value.filter((opportunity) => {
+        const matchesSearch = opportunity.title
+          .toLowerCase()
+          .includes(searchQuery.value.toLowerCase());
+        const matchesCategory =
+          !selectedCategory.value ||
+          opportunity.category === selectedCategory.value;
+        return matchesSearch && matchesCategory;
+      });
+    });
 
-    const requestOpportunity = async (id) => {
-      try {
-        requestingId.value = id;
-        // Using jsonplaceholder.typicode.com to mock the API
-        const response = await axios.post(
-          `https://jsonplaceholder.typicode.com/posts`,
-          {
-            opportunityId: id,
-            userId: 123, // Example user ID
-          }
-        );
-        alert(`Mock Request Sent Successfully! Response ID: ${response.data.id}`);
-      } catch (error) {
-        alert("Failed to send the request. Please try again.");
-        console.error(error);
-      } finally {
-        requestingId.value = null;
+    const isOpportunityFull = (opportunity) =>
+      opportunity.currentRequesters >= opportunity.maxRequesters;
+
+    const requestOpportunity = (opportunity) => {
+      if (!isOpportunityFull(opportunity)) {
+        opportunity.currentRequesters += 1;
+        alert(`You have successfully requested: ${opportunity.title}`);
+      } else {
+        alert("This opportunity is full and cannot be requested.");
       }
     };
 
-    onMounted(fetchOpportunities);
-
     return {
       opportunities,
-      loading,
-      requestingId,
+      searchQuery,
+      selectedCategory,
+      filteredOpportunities,
+      isOpportunityFull,
       requestOpportunity,
     };
   },
 };
 </script>
+
+<style scoped>
+.opportunity-list-page {
+  font-family: Arial, sans-serif;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+</style>

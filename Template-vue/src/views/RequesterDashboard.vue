@@ -18,7 +18,7 @@
         </li>
         <li>
           <router-link
-            to="/upcoming-volunteer-opportunities"
+            to="/volunteer-dashboard/upcoming"
             class="block py-2 flex items-center space-x-2 hover:bg-[#4A6C93] px-4 rounded transition"
             active-class="bg-[#4A6C93]"
           >
@@ -38,7 +38,7 @@
         </li>
         <li>
           <router-link
-            to="/volunteer-profile"
+            to="/volunteer-dashboard/profile"
             class="block py-2 flex items-center space-x-2 hover:bg-[#4A6C93] px-4 rounded transition"
             active-class="bg-[#4A6C93]"
           >
@@ -63,34 +63,20 @@
     <div class="flex-1">
       <!-- Header -->
       <header class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
-        <h1 class="text-2xl font-semibold text-gray-700">
-          Welcome, {{ user.name }}
-        </h1>
+        <h1 class="text-2xl font-semibold text-gray-700">Volunteer Dashboard</h1>
         <div class="flex items-center space-x-4">
-          <button class="material-icons text-gray-500 hover:text-gray-700 transition">
-            notifications
-          </button>
+          <button class="material-icons text-gray-500 hover:text-gray-700 transition">notifications</button>
           <div class="relative group">
             <img
-              :src="user.photo || defaultPhoto"
+              src="https://via.placeholder.com/40"
               alt="Profile"
               class="w-10 h-10 rounded-full cursor-pointer"
             />
             <div
               class="absolute right-0 mt-2 bg-white border rounded shadow-md hidden group-hover:block"
             >
-              <button
-                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left"
-                @click="goToSettings"
-              >
-                Settings
-              </button>
-              <button
-                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left"
-                @click="logout"
-              >
-                Sign Out
-              </button>
+              <button class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left">Settings</button>
+              <button class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left">Logout</button>
             </div>
           </div>
         </div>
@@ -106,42 +92,11 @@
 
 <script>
 export default {
-  name: "VolunteerDashboard",
-  data() {
-    return {
-      user: {
-        name: "John Doe", // Replace this with dynamic data from backend
-        photo: "", // Placeholder until user data is fetched
-      },
-      defaultPhoto: "https://via.placeholder.com/40", // Default photo if no picture is available
-    };
-  },
-  created() {
-    // Fetch user data from localStorage or backend
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) {
-      this.user.name = storedUser.name || "Volunteer";
-      this.user.photo = storedUser.photo || "";
-    } else {
-      console.warn("User data not found in localStorage.");
-    }
-  },
-  methods: {
-    goToSettings() {
-      this.$router.push("/settings");
-    },
-    logout() {
-      // Clear user session data
-      localStorage.removeItem("user");
-      // Redirect to login page
-      this.$router.push("/login");
-    },
-  },
+  name: 'VolunteerDashboard',
 };
 </script>
 
 <style scoped>
-/* Add a transition to the active link background */
 .router-link-active {
   background-color: #4A6C93 !important;
 }

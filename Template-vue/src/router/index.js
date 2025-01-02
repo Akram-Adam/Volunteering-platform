@@ -4,6 +4,10 @@ import Landingpage from '../views/Landingpage.vue'
 import SignUp from '@/views/SignUp.vue' // Import your SignUp component
 import LogIn from "../views/LogIn.vue"; // Import Login view
 import VolunteerDashboard from '../views/VolunteerDashboard.vue'
+import VolunteerOverview from '@/components/VolunteerOverview.vue'
+import UpcominVolunteerOpportunities from '@/components/UpcominVolunteerOpportunities.vue'
+import RequesterDashboard from '../views/RequesterDashboard.vue'
+import VolunteerProfile from '../views/VolunteerProfile.vue'
 //import VolunteerOpportunities from '../views/VolunteerOpportunities.vue'
 import PostOpportunity from '@/components/PostOpportunity.vue' // Import the PostOpportunity component
 import PostedOpportunitiesList from '@/components/PostedOpportunitiesList.vue'
@@ -32,14 +36,38 @@ const router = createRouter({
     },
     {
       path: '/volunteer-dashboard',
-      name: 'VolunteerDashboard',
-      component: VolunteerDashboard,  // Importing the Volunteer Dashboard page
+      component: VolunteerDashboard,
+      children: [
+        {
+          path: '', // Default child route
+          name: 'VolunteerOverview',
+          component: VolunteerOverview,
+        },
+        // Add other child for upcoming opportunities
+        {
+          path: '/upcoming-volunteer-opportunities', // Default child route
+          name: 'UpcominVolunteerOpportunities',
+          component: UpcominVolunteerOpportunities,
+        },
+        {
+          path: '/volunteer-profile',
+          name: 'VolunteerProfile',
+          component: VolunteerProfile,  // Importing the Volunteer Dashboard page
+        },
+        {
+          path: "/post-opportunity",
+          name: "PostOpportunity",
+          component: PostOpportunity, // Use the imported component here
+        },
+      ],
+
     },
     {
-      path: "/post-opportunity",
-      name: "PostOpportunity",
-      component: PostOpportunity, // Use the imported component here
+      path: '/requester-dashboard',
+      name: 'RequesterDashboard',
+      component: () => import('@/views/RequesterDashboard.vue'),
     },
+
     {
       path: '/posted-opportunities',
       name: 'PostedOpportunities',
@@ -74,7 +102,7 @@ const router = createRouter({
       component: AboutUs,
     },
     {
-      path: '/opportunity-list-pag',
+      path: '/opportunity-list-page',
       name: 'RequesterOpportunityList',
       component: RequesterOpportunityList,
     },

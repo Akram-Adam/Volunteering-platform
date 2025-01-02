@@ -1,8 +1,10 @@
 <template>
-  <div id="app">
+  <div class="min-h-screen flex flex-col">
     <!-- Include the Header component -->
     <PageHeader />
+    <main class="flex-1">
     <RouterView />
+    </main>main>
     <PageFooter />
   </div>
 </template>

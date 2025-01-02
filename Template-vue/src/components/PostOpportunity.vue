@@ -1,126 +1,80 @@
 <template>
   <div class="post-opportunity-page p-6 max-w-3xl mx-auto">
-    <h1 class="text-2xl font-bold mb-6 text-center">Post a Volunteer Opportunity</h1>
+    <h1 class="text-2xl font-bold mb-4">Post a Volunteer Opportunity</h1>
     <form @submit.prevent="submitOpportunity">
-      <!-- Title -->
       <div class="mb-4">
         <label for="title" class="block font-semibold mb-2">Title</label>
         <input
           id="title"
           v-model="opportunity.title"
           type="text"
-          class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="Enter the opportunity title"
+          class="w-full p-2 border rounded"
           required
         />
       </div>
-
-      <!-- Description -->
       <div class="mb-4">
         <label for="description" class="block font-semibold mb-2">Description</label>
         <textarea
           id="description"
           v-model="opportunity.description"
           rows="4"
-          class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="Describe the opportunity in detail"
+          class="w-full p-2 border rounded"
           required
         ></textarea>
       </div>
-
-      <!-- Category -->
       <div class="mb-4">
         <label for="category" class="block font-semibold mb-2">Category</label>
-        <select
-          id="category"
-          v-model="opportunity.category"
-          class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-          required
-        >
-          <option value="" disabled>Select a category</option>
-          <option value="Education">Education</option>
-          <option value="Healthcare">Healthcare</option>
-          <option value="Event Assistance">Event Assistance</option>
-          <option value="Tech Support">Tech Support</option>
-          <option value="Other">Other</option>
+        <select v-model="opportunity.category" class="w-full p-2 border rounded" required>
+          <option value="">Select a category</option>
+          <option value="education">Education</option>
+          <option value="environment">Environment</option>
+          <option value="health">Health</option>
         </select>
       </div>
-
-      <!-- Availability -->
       <div class="mb-4">
         <label for="availability" class="block font-semibold mb-2">Availability</label>
         <input
           id="availability"
           v-model="opportunity.availability"
-          type="text"
-          class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="e.g., Monday to Friday, 9 AM to 5 PM"
+          type="date"
+          class="w-full p-2 border rounded"
           required
         />
       </div>
-
-      <!-- Location -->
       <div class="mb-4">
         <label for="location" class="block font-semibold mb-2">Location</label>
         <input
           id="location"
           v-model="opportunity.location"
           type="text"
-          class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="Enter the location"
+          class="w-full p-2 border rounded"
           required
         />
       </div>
-
-      <!-- Dynamic Fields -->
-      <div>
-          <h2 class="text-sm font-medium text-gray-700 mb-2">
-            Add Additional Fields
-          </h2>
-          <div class="space-y-2">
-            <div
-              v-for="(field, index) in customFields"
-              :key="index"
-              class="flex items-center space-x-2"
-            >
-              <input
-                v-model="field.value"
-                type="text"
-                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                :placeholder="field.name || 'Custom Field'"
-              />
-              <button
-                type="button"
-                @click="removeField(index)"
-                class="text-red-500 hover:text-red-600"
-              >
-                Remove
-              </button>
-            </div>
-          </div>
-          <button
-            type="button"
-            @click="addField"
-            class="mt-2 text-blue-500 hover:text-blue-600 text-sm"
-          >
-            + Add Field
-          </button>
-        </div>
-
-      <!-- Submit Button -->
-<div class="flex justify-center mt-4">
-  <button
-    type="submit"
-    class="bg-[#213555] text-white px-6 py-2 rounded hover:bg-blue-600"
-  >
-    Submit Opportunity
-  </button>
-</div>
+      <div class="mb-4">
+        <label for="maxRequesters" class="block font-semibold mb-2">Maximum Number of Requesters</label>
+        <input
+          id="maxRequesters"
+          v-model.number="opportunity.maxRequesters"
+          type="number"
+          class="w-full p-2 border rounded"
+          min="1"
+          required
+        />
+      </div>
+      <button
+        type="submit"
+        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      >
+        Submit
+      </button>
     </form>
   </div>
 </template>
 
 <script>
+import { OpportunityService } from "@/services/OpportunityService";
+
 export default {
   name: "PostOpportunity",
   data() {
@@ -131,28 +85,15 @@ export default {
         category: "",
         availability: "",
         location: "",
+        maxRequesters: 1, // Default to 1
       },
-      dynamicFields: [],
     };
   },
   methods: {
-    addField() {
-      this.dynamicFields.push({
-        placeholder: "Enter additional information",
-        value: "",
-      });
-    },
-    removeField(index) {
-      this.dynamicFields.splice(index, 1);
-    },
     submitOpportunity() {
-      const completeOpportunity = {
-        ...this.opportunity,
-        additionalFields: this.dynamicFields.map((field) => field.value),
-      };
-      console.log("Opportunity Submitted:", completeOpportunity);
-      alert("Volunteer Opportunity Submitted!");
-      this.$router.push("/"); // Navigate after submission
+      OpportunityService.add(this.opportunity);
+      alert("Volunteer opportunity added!");
+      this.$router.push("/volunteer-dashboard"); // Redirect to the volunteer dashboard
     },
   },
 };

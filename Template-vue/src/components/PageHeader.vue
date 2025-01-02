@@ -9,7 +9,6 @@
         <RouterLink to="/" class="text-lg font-semibold hover:text-[#4C6EF5] text-[#3E5879]">Home</RouterLink>
         <RouterLink to="/contact-us" class="text-lg font-semibold hover:text-[#D8C4B6] text-[#3E5879]">Contact</RouterLink>
         <RouterLink to="/about-us" class="text-lg font-semibold hover:text-[#D8C4B6] text-[#3E5879]">About</RouterLink>
-        <RouterLink to="/how-it-works" class="text-lg font-semibold hover:text-[#D8C4B6] text-[#3E5879]">How It Works</RouterLink>
         <RouterLink to="/login" class="text-lg font-semibold hover:text-[#D8C4B6] text-[#3E5879]">Log In</RouterLink>
       </nav>
 
