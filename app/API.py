@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 
 app = Flask(__name__)
-app.config.from_object('config.Config')
+# app.config.from_object('config.Config')
 
 CORS(app)  # Enable CORS to allow frontend to communicate with the backend
 
@@ -19,7 +19,7 @@ def generate_jwt(email):
         "email": email,
         "exp": datetime.utcnow() + timedelta(hours=1)
     }
-    return jwt.encode(payload, app.config['SECRET_KEY'], algorithm="HS256")
+    return jwt.encode(payload, "your_secret_key", algorithm="HS256")
 
 
 def verify_jwt(token):
@@ -27,7 +27,7 @@ def verify_jwt(token):
     Verify a JWT and return the payload if valid.
     """
     try:
-        return jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+        return jwt.decode(token, "your_secret_key", algorithms=["HS256"])
     except jwt.ExpiredSignatureError:
         return None  # Token expired
     except jwt.InvalidTokenError:
@@ -60,11 +60,11 @@ def profile():
 
     # Verify token
     user_data = verify_jwt(token)
-    if user_data:
+    # if user_data:
         # return jsonify({"email": user_data["email"], "profile": "User profile data"}), 200
         # here we will be returning the data that currosponds with the needs of the profile of the user
     return jsonify({"message": "Invalid or expired token"}), 401
 
 
 if __name__ == '__main__':
-    app.run(app.config['DEBUG'])
+    app.run(debug = True)
