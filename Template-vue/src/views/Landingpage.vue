@@ -1,7 +1,6 @@
 <template>
   <div class="landing-page">
     <!-- Header-->
-    <PageHeader />
 
     <!-- Hero Section -->
     <section class="hero-section bg-[#3E5879] text-[#F5EFE7] text-center py-20">

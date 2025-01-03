@@ -1,5 +1,5 @@
 <template>
-  <div class="upcoming-volunteer-opportunities p-6 bg-[#F5EFE7] min-h-screen">
+  <div class="upcoming-volunteer-opportunities p-6 bg-[#e2e8f0] min-h-screen">
     <h1 class="text-2xl font-semibold text-gray-700 mb-4">Upcoming Opportunities</h1>
     <div v-if="opportunities.length === 0" class="text-center text-gray-500">
       No upcoming opportunities at the moment.

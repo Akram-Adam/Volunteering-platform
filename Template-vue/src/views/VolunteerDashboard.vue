@@ -27,14 +27,13 @@
           </router-link>
         </li>
         <li>
-          <router-link
-            to="/volunteer-dashboard/messages"
-            class="block py-2 flex items-center space-x-2 hover:bg-[#4A6C93] px-4 rounded transition"
-            active-class="bg-[#4A6C93]"
+          <button
+            @click="toggleChat"
+            class="block py-2 flex items-center space-x-2 hover:bg-[#4A6C93] px-4 rounded transition w-full text-left"
           >
             <span class="material-icons">message</span>
             <span>Messages</span>
-          </router-link>
+          </button>
         </li>
         <li>
           <router-link
@@ -97,16 +96,28 @@
       </header>
 
       <!-- Content -->
-      <div class="p-6 bg-[#F5EFE7]">
+      <div class="p-6 bg-[white]">
         <RouterView />
       </div>
+
+      <!-- Message Component -->
+      <MessageComponent
+        v-if="showChat"
+        chatTitle="Chat with Requester"
+        :initialMessages="chatMessages"
+        @closeChat="toggleChat"
+        @messageSent="handleMessageSent"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import MessageComponent from "@/components/MessageComponent .vue";
+
 export default {
   name: "VolunteerDashboard",
+  components: { MessageComponent },
   data() {
     return {
       user: {
@@ -114,10 +125,14 @@ export default {
         photo: "", // Placeholder until user data is fetched
       },
       defaultPhoto: "https://via.placeholder.com/40", // Default photo if no picture is available
+      showChat: false, // Controls the visibility of the chat
+      chatMessages: [
+        { text: "Hello, how can I help you?", sender: "volunteer" },
+        { text: "I need help with an upcoming event.", sender: "requester" },
+      ],
     };
   },
   created() {
-    // Fetch user data from localStorage or backend
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
       this.user.name = storedUser.name || "Volunteer";
@@ -127,13 +142,17 @@ export default {
     }
   },
   methods: {
+    toggleChat() {
+      this.showChat = !this.showChat;
+    },
+    handleMessageSent(message) {
+      console.log("Message sent:", message);
+    },
     goToSettings() {
       this.$router.push("/settings");
     },
     logout() {
-      // Clear user session data
       localStorage.removeItem("user");
-      // Redirect to login page
       this.$router.push("/login");
     },
   },
@@ -141,9 +160,8 @@ export default {
 </script>
 
 <style scoped>
-/* Add a transition to the active link background */
 .router-link-active {
-  background-color: #4A6C93 !important;
+  background-color: #4a6c93 !important;
 }
 
 .material-icons {

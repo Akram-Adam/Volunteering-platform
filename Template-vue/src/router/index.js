@@ -6,7 +6,6 @@ import LogIn from "../views/LogIn.vue"; // Import Login view
 import VolunteerDashboard from '../views/VolunteerDashboard.vue'
 import VolunteerOverview from '@/components/VolunteerOverview.vue'
 import UpcominVolunteerOpportunities from '@/components/UpcominVolunteerOpportunities.vue'
-import RequesterDashboard from '../views/RequesterDashboard.vue'
 import VolunteerProfile from '../views/VolunteerProfile.vue'
 //import VolunteerOpportunities from '../views/VolunteerOpportunities.vue'
 import PostOpportunity from '@/components/PostOpportunity.vue' // Import the PostOpportunity component
@@ -16,6 +15,7 @@ import MessageComponent from '@/components/MessageComponent .vue'  // Import the
 import ContactUs from '@/views/ContactUs.vue' // import contact page
 import AboutUs from '@/views/AboutUs.vue' // import about page
 import RequesterOpportunityList from'@/views/RequesterOpportunityList.vue' // import requester opporuninty list that posted by volunteers
+import RequesterDashboard from '../views/RequesterDashboard.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -59,6 +59,11 @@ const router = createRouter({
           name: "PostOpportunity",
           component: PostOpportunity, // Use the imported component here
         },
+        {
+          path: '/messages',
+          name: 'Messages',
+          component: MessageComponent,  // Add route for messaging
+        },
       ],
 
     },
@@ -77,11 +82,6 @@ const router = createRouter({
       path: '/find-volunteering-opportunity',
       name: 'FindVolunteeringOpportunity',
       component: FindVolunteeringOpportunity,
-    },
-    {
-      path: '/messages',
-      name: 'Messages',
-      component: MessageComponent,  // Add route for messaging
     },
     {
       path: '/about',
