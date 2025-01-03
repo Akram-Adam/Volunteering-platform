@@ -115,7 +115,6 @@ import PageHeader from '@/components/PageHeader.vue';
 export default {
   name: 'LandingPage',
   components: {
-    PageHeader,
   },
   setup() {
     const steps = ref([
