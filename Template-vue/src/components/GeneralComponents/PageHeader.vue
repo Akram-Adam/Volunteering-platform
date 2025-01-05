@@ -24,11 +24,8 @@
     <!-- Mobile Navigation (Dropdown Menu) -->
     <div v-if="isMenuOpen" class="md:hidden mt-4">
       <RouterLink to="/" class="block text-lg font-semibold py-2">Home</RouterLink>
+      <RouterLink to="/contact" class="block text-lg font-semibold py-2">Contact</RouterLink>
       <RouterLink to="/about" class="block text-lg font-semibold py-2">About</RouterLink>
-      <RouterLink to="/find-opportunities" class="block text-lg font-semibold py-2">Find Opportunities</RouterLink>
-      <RouterLink to="/how-it-works" class="block text-lg font-semibold py-2">How It Works</RouterLink>
-      <RouterLink to="/signup" class="block text-lg font-semibold py-2">Sign Up</RouterLink>
-      <RouterLink to="/login" class="block text-lg font-semibold py-2">Log In</RouterLink>
       <RouterLink to="/contact" class="block text-lg font-semibold py-2">Contact</RouterLink>
     </div>
   </header>

@@ -35,6 +35,20 @@
           />
         </div>
         <div class="mb-4">
+          <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
+          <select
+            v-model="gender"
+            id="gender"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            required
+          >
+            <option value="" disabled>Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="mb-4">
           <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
           <input
             v-model="password"
@@ -69,13 +83,14 @@ import { useRouter } from "vue-router";
 export default {
   name: "SignUp",
   components: {
-  PageHeader, // Register the Footer component
+    PageHeader, // Register the Footer component
   },
   setup() {
     const router = useRouter();
     const name = ref("");
     const email = ref("");
     const phone = ref("");
+    const gender = ref(""); // Add gender field
     const password = ref("");
 
     const handleSignUp = () => {
@@ -86,6 +101,7 @@ export default {
           name: name.value,
           email: email.value,
           phone: phone.value,
+          gender: gender.value, // Store gender
           password: password.value,
         })
       );
@@ -93,7 +109,7 @@ export default {
       router.push("/login");
     };
 
-    return { name, email, phone, password, handleSignUp };
+    return { name, email, phone, gender, password, handleSignUp };
   },
 };
 </script>

@@ -17,11 +17,13 @@
                 <span>Total Slots: {{ opportunity.totalSlots }}</span>
               </div>
             </div>
-            <!-- Request Button -->
+            <!-- Request Button (Disabled if no available slots) -->
             <div>
               <button
                 @click="openRequestForm(opportunity)"
+                :disabled="opportunity.availableSlots === 0"
                 class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+                :class="{'bg-gray-300 cursor-not-allowed': opportunity.availableSlots === 0}"
               >
                 Request Now
               </button>

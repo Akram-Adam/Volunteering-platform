@@ -2,7 +2,7 @@
   <div class="min-h-screen flex flex-col">
     <main class="flex-1">
     <RouterView />
-    </main>main>
+    </main>
     <!-- Include the footer component -->
     <PageFooter />
   </div>
