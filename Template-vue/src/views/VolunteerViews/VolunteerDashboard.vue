@@ -1,9 +1,10 @@
 <template>
+  <MainHeader />
   <div class="volunteer-dashboard min-h-screen flex bg-gray-100">
     <!-- Sidebar -->
     <div class="w-64 bg-[#3E5879] text-white p-6">
       <div class="mb-6">
-        <h2 class="text-2xl font-bold">Volunteer Platform</h2>
+        <h2 class="text-2xl font-bold">Volunteer Dashboard</h2>
       </div>
       <ul class="space-y-4">
         <li>
@@ -18,12 +19,12 @@
         </li>
         <li>
           <router-link
-            to="/upcoming-volunteer-opportunities"
+            to="/posted-opportunities"
             class="block py-2 flex items-center space-x-2 hover:bg-[#4A6C93] px-4 rounded transition"
             active-class="bg-[#4A6C93]"
           >
-            <span class="material-icons">event</span>
-            <span>Upcoming Opportunities</span>
+            <span class="material-icons">history</span>
+            <span>My posts</span>
           </router-link>
         </li>
         <li>
@@ -113,11 +114,14 @@
 </template>
 
 <script>
-import MessageComponent from "@/components/MessageComponent .vue";
-
+import MainHeader from '@/components/GeneralComponents/MainHeader.vue'; // Import the main page header
+import MessageComponent from "@/components/GeneralComponents/MessageComponent.vue";
 export default {
   name: "VolunteerDashboard",
-  components: { MessageComponent },
+  components: {
+    MessageComponent,
+    MainHeader,
+   },
   data() {
     return {
       user: {

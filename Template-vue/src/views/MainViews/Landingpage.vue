@@ -1,7 +1,6 @@
 <template>
   <div class="landing-page">
-    <!-- Header-->
-
+    <PageHeader />
     <!-- Hero Section -->
     <section class="hero-section bg-[#3E5879] text-[#F5EFE7] text-center py-20">
       <div class="container mx-auto">
@@ -14,7 +13,8 @@
         </p>
         <button
           class="bg-[#3E5879] text-white px-6 py-3 rounded-lg hover:bg-[#D8C4B6] transition"
-          @click="navigateToSignUp">
+          @click="navigateToSignUp"
+        >
           Join Now
         </button>
       </div>
@@ -45,48 +45,6 @@
       </div>
     </section>
 
-    <!-- How It Works Section -->
-    <section class="steps-section py-10 bg-[#e5e5e5]">
-  <div class="container mx-auto text-center">
-    <h2 class="text-3xl font-bold mb-8 text-[#213555]">How It Works</h2>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-      <div
-        v-for="(step, index) in steps"
-        :key="index"
-        class="bg-white shadow-md rounded-lg p-6 transform transition-all duration-500 opacity-0 translate-y-6"
-        :class="{ 'opacity-100 translate-y-0': revealed, [`delay-${index * 200}`]: revealed }"
-      >
-        <h3 class="text-xl font-bold mb-4">{{ step.title }}</h3>
-        <p>{{ step.description }}</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-    <!-- Testimonials Section -->
-    <section class="testimonials-section py-10 bg-[#3E5879]">
-      <div class="container mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-8 text-[white] animate-pulse">Inspiring Success Stories</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <blockquote class="bg-white shadow-md rounded-lg p-6">
-            <p class="italic mb-4">
-              "Thanks to this platform, I was able to volunteer at many events. It was a great and
-              rewarding experience for everyone."
-            </p>
-            <footer class="font-bold">Ahmed Ali</footer>
-          </blockquote>
-          <blockquote class="bg-white shadow-md rounded-lg p-6">
-            <p class="italic mb-4">
-              "The ease of use and the connection between volunteers and organizers made
-              volunteering fun and simple."
-            </p>
-            <footer class="font-bold">Fatima Abd El Rahman</footer>
-          </blockquote>
-        </div>
-      </div>
-    </section>
-
     <!-- Call to Action Section -->
     <section class="call-to-action-section bg-[#e5e5e5] text-[#F5EFE7] text-center py-10">
       <div class="container mx-auto">
@@ -103,20 +61,22 @@
         </button>
       </div>
     </section>
-
-    <!-- Footer -->
   </div>
 </template>
 
 <script>
+import PageHeader from '@/components/GeneralComponents/PageHeader.vue'; // Import the landing page header
 import { ref, onMounted } from 'vue';
-import PageHeader from '@/components/PageHeader.vue';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'LandingPage',
   components: {
+    PageHeader, // Register the Footer component
   },
   setup() {
+    const router = useRouter();
+
     const steps = ref([
       { title: 'Step 1: Sign Up', description: 'Register by providing basic user information such as your name, email, and password.' },
       { title: 'Step 2: Login', description: 'Login using your credentials and select your role as a Volunteer or Requester.' },
@@ -133,7 +93,7 @@ export default {
     });
 
     const navigateToSignUp = () => {
-      this.$router.push('/signup');
+      router.push('/signup'); // Correct way to navigate
     };
 
     return { steps, revealed, navigateToSignUp };

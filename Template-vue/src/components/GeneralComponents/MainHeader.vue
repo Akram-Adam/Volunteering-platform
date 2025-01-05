@@ -1,4 +1,5 @@
 <template>
+    <!-- This is the main header for all pages -->
   <header class="bg-[#e5e5e5] p-4">
     <!-- Logo Section -->
     <div class="flex items-center justify-between">
@@ -9,7 +10,7 @@
         <RouterLink to="/" class="text-lg font-semibold hover:text-[#4C6EF5] text-[#3E5879]">Home</RouterLink>
         <RouterLink to="/contact-us" class="text-lg font-semibold hover:text-[#D8C4B6] text-[#3E5879]">Contact</RouterLink>
         <RouterLink to="/about-us" class="text-lg font-semibold hover:text-[#D8C4B6] text-[#3E5879]">About</RouterLink>
-        <RouterLink to="/login" class="text-lg font-semibold hover:text-[#D8C4B6] text-[#3E5879]">Log In</RouterLink>
+        <RouterLink to="/login" class="text-lg font-semibold hover:text-[#D8C4B6] text-[#3E5879]">Log Out</RouterLink>
       </nav>
 
       <!-- Mobile Hamburger Menu -->

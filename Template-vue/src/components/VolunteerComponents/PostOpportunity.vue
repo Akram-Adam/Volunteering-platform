@@ -43,13 +43,31 @@
       </div>
       <div class="mb-4">
         <label for="location" class="block font-semibold mb-2">Location</label>
-        <input
-          id="location"
-          v-model="opportunity.location"
-          type="text"
-          class="w-full p-2 border rounded"
-          required
-        />
+        <select v-model="opportunity.location" class="w-full p-2 border rounded" required>
+          <option value="">Select a location</option>
+          <option value="Algeria">Algeria</option>
+          <option value="Bahrain">Bahrain</option>
+          <option value="Comoros">Comoros</option>
+          <option value="Djibouti">Djibouti</option>
+          <option value="Egypt">Egypt</option>
+          <option value="Iraq">Iraq</option>
+          <option value="Jordan">Jordan</option>
+          <option value="Kuwait">Kuwait</option>
+          <option value="Lebanon">Lebanon</option>
+          <option value="Libya">Libya</option>
+          <option value="Mauritania">Mauritania</option>
+          <option value="Morocco">Morocco</option>
+          <option value="Oman">Oman</option>
+          <option value="Palestine">Palestine</option>
+          <option value="Qatar">Qatar</option>
+          <option value="Saudi Arabia">Saudi Arabia</option>
+          <option value="Somalia">Somalia</option>
+          <option value="Sudan">Sudan</option>
+          <option value="Syria">Syria</option>
+          <option value="Tunisia">Tunisia</option>
+          <option value="United Arab Emirates">United Arab Emirates</option>
+          <option value="Yemen">Yemen</option>
+        </select>
       </div>
       <div class="mb-4">
         <label for="maxRequesters" class="block font-semibold mb-2">Maximum Number of Requesters</label>
@@ -64,7 +82,7 @@
       </div>
       <button
         type="submit"
-        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        class="bg-[#3E5879] text-white px-4 py-2 rounded hover:bg-blue-600"
       >
         Submit
       </button>
