@@ -154,22 +154,22 @@ export default {
       opportunities: [
         {
           id: 1,
-          title: "Gardening Help Needed",
-          description: "Seeking a volunteer for gardening tasks this weekend.",
+          title: "Blood Donation",
+          description: "Seeking a Some one need B+ blood type.",
           availableSlots: 3,
           totalSlots: 5,
         },
         {
           id: 2,
           title: "Tech Support for Setting Up a PC",
-          description: "Assistance required to set up a new computer system.",
+          description: "Provide Assistance to set up a new computer system.",
           availableSlots: 2,
           totalSlots: 4,
         },
         {
           id: 3,
           title: "Tutoring Math for High School Student",
-          description: "Looking for a volunteer to tutor my child in algebra.",
+          description: "Provide tutoring for children in algebra.",
           availableSlots: 1,
           totalSlots: 3,
         },
