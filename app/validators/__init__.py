@@ -1,11 +1,3 @@
-""" 
-    This is The Error Event mudule  
-    This module should handel the Error that will delever to the user 
-    and the System failures
-    - Frist Type : System failers
-    - UserError : Error the should delver to the User
-"""
-
 import json
 
 

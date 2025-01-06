@@ -5,9 +5,20 @@ from sqlalchemy.orm import sessionmaker,scoped_session
 from sqlalchemy import or_, and_
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.exc import NoSuchTableError, OperationalError, ProgrammingError
+
+
+
+# importing modules 
 from app.models.extra.extrafile import get_Config_data
 from app.models.base_model import Base, BaseModel
 from app.models.user import User
+from app.models.profileModles.certification import Certification
+from app.models.profileModles.education import Education
+from app.models.profileModles.experience import Experience
+from app.models.profileModles.languages import Languages
+from app.models.profileModles.skills import Skills
+from app.models.profileModles.voluntering import Volunteering
+from app.models.profileModles.intersts import Interests
 
 
 
@@ -139,26 +150,20 @@ class DBStorage:
             # Handle operational errors if any
             pass
 
-    # def account_check_existance(self, email=None, username=None):
-    #     """
-    #         Method to check to check if there user by same username or same email
-    #             - check email if is not None
-    #             - check username if is not None
-    #             return tuble (True, True) / (False, False)
-    #     """
-    #     emailres= None
-    #     usernameres= None
-    #     if email:
-    #         q_statment = exists().where(User.email == email)
-    #         if self.__session.is_active:
-    #             emailres = self.__session.query(q_statment).scalar()
+    def account_check_existance(self, email=None):
+        """
+            Method to check to check if there user by same username or same email
+                - check email if is not None
+                - check username if is not None
+                return True: if user and email are valid and no matched
+        """
+        emailres= None
+        if email:
+            q_statment = exists().where(User.email == email)
+            if self.__session.is_active:
+                emailres = self.__session.query(q_statment).scalar()
 
-    #     if username:
-    #         if self.__session.is_active:
-    #             q_statment = exists().where(User.username == username)
-    #             usernameres = self.__session.query(q_statment).scalar()
-
-    #     return (emailres, usernameres)
+        return emailres
 
     def getuser(self, usernameoremail):
         """ Get user object """
@@ -191,7 +196,9 @@ class DBStorage:
         """
         # Mapping of class names to class objects
         classes = {
-            'User': User
+            'User': User, 'Certification': Certification, 'Education': Education,
+            'Experience': Experience, 'Languages': Languages, 'Skills': Skills,
+            'Volunteering': Volunteering, 'Interests': Interests #add more classes here
         }
 
         if class_name in classes:

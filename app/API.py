@@ -4,13 +4,6 @@ import jwt
 from datetime import datetime, timedelta
 
 
-
-app = Flask(__name__)
-# app.config.from_object('config.Config')
-
-CORS(app)  # Enable CORS to allow frontend to communicate with the backend
-
-
 def generate_jwt(email):
     """
     Generate a JWT with user email and expiry.
@@ -66,5 +59,25 @@ def profile():
     return jsonify({"message": "Invalid or expired token"}), 401
 
 
+def create_app():
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = 'your-secret-key'
+
+    # Enable CORS
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+    # Register blueprints
+    # app.register_blueprint(volunteer_bp, url_prefix='/api/volunteers')
+    # app.register_blueprint(auth_bp, url_prefix='/api/auth')
+    # app.register_blueprint(event_bp, url_prefix='/api/events')
+    # add more blueprints here
+
+    return app
+
+ pp = create_app()
+
+
+
 if __name__ == '__main__':
+   
     app.run(debug = True)
