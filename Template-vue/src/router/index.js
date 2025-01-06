@@ -4,6 +4,7 @@ import HomeView from '../views/MainViews/Landingpage.vue'
 import Landingpage from '../views/MainViews/Landingpage.vue'
 import SignUp from '@/views/MainViews/SignUp.vue'
 import LogIn from '../views/MainViews/LogIn.vue'
+import ForgotPassword from '../views/MainViews/forgot-password.vue';
 import MainPage from '../views/MainViews/MainPage.vue'
 import AboutUs from '@/views/MainViews/AboutUs.vue'
 import ContactUs from '@/views/MainViews/ContactUs.vue'
@@ -43,7 +44,13 @@ const router = createRouter({
     },
     {
       path: "/login",
-      component: LogIn
+      name: "LogIn",
+      component: LogIn,
+    },
+    {
+      path: "/forgot-password",
+      name: "ForgotPassword",
+      component: ForgotPassword,
     },
     {
       path: "/main-page",

@@ -56,13 +56,14 @@
 
 <script>
 import PageHeader from '@/components/GeneralComponents/PageHeader.vue'; // Import the landing page header
+import Swal from 'sweetalert2'; // Import SweetAlert2
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 export default {
   name: "LogIn",
   components: {
-  PageHeader, // Register the Footer component
+    PageHeader, // Register the PageHeader component
   },
   setup() {
     const router = useRouter();
@@ -88,8 +89,19 @@ export default {
         return;
       }
 
+      // Show success animation
+      Swal.fire({
+        icon: 'success',
+        title: 'Login Successful!',
+        text: 'You are now logged in.',
+        timer: 2000, // This will automatically close the popup after 2 seconds
+        showConfirmButton: false, // No need for confirm button
+      });
+
       // Redirect to the Main component
-      router.push("/main-page");
+      setTimeout(() => {
+        router.push("/main-page");
+      }, 2000); // Delay the redirect until the SweetAlert closes
     };
 
     return { email, password, errorMessage, handleLogin };

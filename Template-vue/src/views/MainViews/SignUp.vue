@@ -58,6 +58,16 @@
             required
           />
         </div>
+        <div class="mb-4">
+          <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+          <input
+            v-model="confirmPassword"
+            type="password"
+            id="confirmPassword"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            required
+          />
+        </div>
         <button
           type="submit"
           class="w-full bg-[#3E5879] text-white py-2 px-4 rounded-lg shadow-md hover:bg-indigo-700 transition"
@@ -76,24 +86,35 @@
 </template>
 
 <script>
-import PageHeader from '@/components/GeneralComponents/PageHeader.vue'; // Import the landing page header
+import PageHeader from '@/components/GeneralComponents/PageHeader.vue';
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import Swal from "sweetalert2";
 
 export default {
   name: "SignUp",
   components: {
-    PageHeader, // Register the Footer component
+    PageHeader,
   },
   setup() {
     const router = useRouter();
     const name = ref("");
     const email = ref("");
     const phone = ref("");
-    const gender = ref(""); // Add gender field
+    const gender = ref("");
     const password = ref("");
+    const confirmPassword = ref("");
 
     const handleSignUp = () => {
+      if (password.value !== confirmPassword.value) {
+        Swal.fire({
+          icon: "error",
+          title: "Passwords Don't Match!",
+          text: "Please ensure both passwords are identical.",
+        });
+        return;
+      }
+
       // Mock storing user details in a backend or database
       localStorage.setItem(
         "user",
@@ -101,15 +122,22 @@ export default {
           name: name.value,
           email: email.value,
           phone: phone.value,
-          gender: gender.value, // Store gender
+          gender: gender.value,
           password: password.value,
         })
       );
-      alert("Sign-up successful! Please log in.");
-      router.push("/login");
+
+      Swal.fire({
+        icon: "success",
+        title: "Sign-up Successful!",
+        text: "You can now log in with your account.",
+        confirmButtonColor: "#3E5879",
+      }).then(() => {
+        router.push("/login");
+      });
     };
 
-    return { name, email, phone, gender, password, handleSignUp };
+    return { name, email, phone, gender, password, confirmPassword, handleSignUp };
   },
 };
 </script>
