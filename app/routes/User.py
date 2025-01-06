@@ -5,16 +5,11 @@ from app.validators import ERROR_EVENT
 from app.validators.User import *
 from app.models.user import User
 import jwt
+from datetime import datetime, timedelta
 
-
-
-# import data validation
 
 
 USER = blueprints('User', __name__) # Create the user blueprint
-
-
-
 
 
 
