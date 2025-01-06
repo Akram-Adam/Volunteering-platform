@@ -89,7 +89,7 @@ export default {
       }
 
       // Redirect to the Main component
-      router.push("/main");
+      router.push("/main-page");
     };
 
     return { email, password, errorMessage, handleLogin };
