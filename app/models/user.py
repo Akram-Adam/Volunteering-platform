@@ -10,7 +10,8 @@ from models.profile import Profile
 class User(BaseModel, Base):
     """This class defines a user by various attributes"""
     __tablename__ = 'users'
-    name = Column(String(128), nullable=False)
+    frist_name = Column(String(128), nullable=False)
+    last_name = Column(String(128), nullable=False)
     email = Column(String(128), nullable=False, unique=True)
     password = Column(String(128), nullable=False)
     phone = Column(String(128), nullable=True)

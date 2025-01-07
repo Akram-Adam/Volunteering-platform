@@ -17,7 +17,7 @@ class Education(BaseModel, Base):
     grade = Column(String(128), nullable=True)
     activities = Column(String(128), nullable=True)
     description = Column(String(1024), nullable=True)
-    profile_id = Column(Integer, ForeignKey('profiles.id'), nullable=False)
+    profile_id = Column(String(60), ForeignKey('profiles.id'), nullable=False)
 
     profile = relationship('Profile', back_populates='educations')
 

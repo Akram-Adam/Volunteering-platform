@@ -12,7 +12,7 @@ class Social(BaseModel, Base):
     __tablename__ = 'social'
     name = Column(String(128), nullable=False)
     url = Column(String(128), nullable=False)
-    profile_id = Column(Integer, ForeignKey('profiles.id'), nullable=False)
+    profile_id = Column(String(60), ForeignKey('profiles.id'), nullable=False)
 
     profile = relationship('Profile', back_populates='socials')
 

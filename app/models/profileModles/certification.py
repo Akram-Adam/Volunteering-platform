@@ -17,7 +17,7 @@ class Certification(BaseModel, Base):
     credential_ID = Column(String(1024), nullable=True)
     credential_URL = Column(String(1024), nullable=True)
     associated_skill = Column(String(128), nullable=True)
-    profile_id = Column(Integer, ForeignKey('profiles.id'), nullable=False)
+    profile_id = Column(String(60), ForeignKey('profiles.id'), nullable=False)
 
     profile = relationship('Profile', back_populates='certifications')
 

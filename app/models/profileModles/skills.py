@@ -8,7 +8,7 @@ class Skill(BaseModel, Base):
     """This class defines the skills model"""
     __tablename__ = 'skills'
     name = Column(String(128), nullable=False)
-    profile_id = Column(Integer, ForeignKey('profiles.id'), nullable=False)
+    profile_id = Column(String(60), ForeignKey('profiles.id'), nullable=False)
 
     profile = relationship('Profile', back_populates='skills')
 

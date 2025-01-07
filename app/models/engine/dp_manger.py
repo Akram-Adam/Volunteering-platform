@@ -24,6 +24,7 @@ from models.profileModles.social import Social
 
 
 
+
 class DBStorage:
     """ Class that handel the datatbase """
     __engine = None
@@ -132,7 +133,7 @@ class DBStorage:
                     pass
                 except ProgrammingError as API_Error:
                     pass
-
+    
     def reload(self):
         """
         Create all tables in the database and create a new session.

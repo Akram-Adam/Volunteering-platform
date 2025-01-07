@@ -10,7 +10,7 @@ class Interest(BaseModel, Base):
     """This class defines the interests model"""
     __tablename__ = 'interests'
     name = Column(String(128), nullable=False)
-    profile_id = Column(Integer, ForeignKey('profiles.id'), nullable=False)
+    profile_id = Column(String(60), ForeignKey('profiles.id'), nullable=False)
 
     profile = relationship('Profile', back_populates='interests')
 

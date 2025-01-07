@@ -4,6 +4,7 @@ import jwt
 from datetime import datetime, timedelta
 # from routes.User import USER
 from models.user import User
+from models import db_session
 
 
 def create_app():
@@ -85,6 +86,9 @@ if __name__ == '__main__':
     # app.run(debug = True)
 
     # test user data
+    db_session.reload()
+
     data_user = User(email="test@gmail.com", password="test123@123#TEST",
-                     first_name="test", last_name="test", phone_number="1234567890",
+                     frist_name="test", last_name="test", phone_number="1234567890",
                      address="test address", city="test city", state="test state", zip_code="12345")
+    data_user.save()

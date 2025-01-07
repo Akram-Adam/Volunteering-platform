@@ -10,7 +10,7 @@ class Language(BaseModel, Base):
     """This class defines the languages model"""
     __tablename__ = 'languages'
     name = Column(String(128), nullable=False)
-    profile_id = Column(Integer, ForeignKey('profiles.id'), nullable=False)
+    profile_id = Column(String(60), ForeignKey('profiles.id'), nullable=False)
 
     profile = relationship('Profile', back_populates='languages')
 

@@ -13,7 +13,7 @@ class Profile(BaseModel, Base):
     type = Column(String(128), nullable=False) # could be orgnization, individua volanter
     profilepic = Column(String(128), nullable=True) # path to the profile picture
     background = Column(String(128), nullable=True) # path to the background picture
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     user = relationship("User", back_populates="profile")
     certifications = relationship('Certification', back_populates='profile')
     educations = relationship('Education', back_populates='profile')

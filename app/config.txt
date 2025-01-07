@@ -5,7 +5,7 @@
 
 dp = VolunConnect_dev_dp
 dpuser = VolunConnect_admin_app_dev
-dpuserpass = @1!Volunteer
+dpuserpass = Volunteer_dev
 host = localhost
 mood = test
 
