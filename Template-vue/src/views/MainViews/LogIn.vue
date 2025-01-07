@@ -63,7 +63,7 @@ import PageHeader from "@/components/GeneralComponents/PageHeader.vue";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { useAuthStore } from "@/stores/autStore";
+import { useAuthStore } from "@/stores/authStore";
 
 export default {
   name: "LogIn",
