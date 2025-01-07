@@ -9,7 +9,7 @@
 CREATE DATABASE IF NOT EXISTS VolunConnect_dev_dp;
 
 -- Create the user
-CREATE USER IF NOT EXISTS 'VolunConnect_admin_app_dev'@'localhost' IDENTIFIED BY 'VolunConnect_admin_app_pass';
+CREATE USER IF NOT EXISTS 'VolunConnect_admin_app_dev'@'localhost' IDENTIFIED BY '@1!Volunteer';
 
 
 -- Grant that user all privileges on the VolunConnect_dev_dp database.
