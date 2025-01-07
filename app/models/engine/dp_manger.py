@@ -9,16 +9,16 @@ from sqlalchemy.exc import NoSuchTableError, OperationalError, ProgrammingError
 
 
 # importing modules 
-from app.models.extra.extrafile import get_Config_data
-from app.models.base_model import Base, BaseModel
-from app.models.user import User
-from app.models.profileModles.certification import Certification
-from app.models.profileModles.education import Education
-from app.models.profileModles.experience import Experience
-from app.models.profileModles.languages import Languages
-from app.models.profileModles.skills import Skills
-from app.models.profileModles.voluntering import Volunteering
-from app.models.profileModles.intersts import Interests
+from models.extra.extrafile import get_Config_data
+from models.base_model import Base, BaseModel
+from models.user import User
+from models.profileModles.certification import Certification
+from models.profileModles.education import Education
+from models.profileModles.experience import Experience
+from models.profileModles.languages import Languages
+from models.profileModles.skills import Skills
+from models.profileModles.voluntering import Volunteering
+from models.profileModles.intersts import Interests
 
 
 

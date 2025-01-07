@@ -1,17 +1,15 @@
 """ This file is for the user routes  for profile and user data  including the login and registeration """
 from flask import blueprints, request, jsonify
-from app.models import db_session
-from app.validators import ERROR_EVENT
-from app.validators.User import *
-from app.models.user import User
+from models import db_session
+from validators import ERROR_EVENT
+from validators.User import *
+from models.user import User
 import jwt
 from datetime import datetime, timedelta
 
 
 
-USER = blueprints('User', __name__) # Create the user blueprint
-
-
+USER = blueprints('User', __name__) # Create the user blueprint 
 
 
 

@@ -9,9 +9,8 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, String, create_engine, ForeignKey
 from sqlalchemy import CHAR, DateTime, func
 from sqlalchemy.orm import declarative_base
-from app.models.extra.extrafile import is_list_part_of
-from app.models import db_session
-from app.models.engine.Errorevent import ERROR_EVENT
+from models.extra.extrafile import is_list_part_of
+# from models.engine.Errorevent import ERROR_EVENT
 
 Base = declarative_base()
 
@@ -68,6 +67,8 @@ class BaseModel:
         """
         Update databse by the new element "Object"
         """
+        from models import db_session
+
         db_session.new(self)
         db_session.save()
 
@@ -76,29 +77,33 @@ class BaseModel:
         """
         Delete the object from database
         """
+        from models import db_session
+
         db_session.delete(self)
 
 
-    def update(self, **kwargs):
-        """ Method for update data attribute """
-        if 'id' in kwargs:
-            """ Drop The request """
-            return ERROR_EVENT(maasage=" You can't update 'id' feild", code='0.5.0', typeevent='Usererror')
+    # def update(self, **kwargs):
+    #     """ Method for update data attribute """
+    #     from models import db_session
+        
+    #     if 'id' in kwargs:
+    #         """ Drop The request """
+    #         return ERROR_EVENT(maasage=" You can't update 'id' feild", code='0.5.0', typeevent='Usererror')
 
-        if 'created_at' in kwargs:
-            """ Drop The request """
-            return ERROR_EVENT(maasage="You can't update 'created_at' feild", code='0.5.1', typeevent='Usererror')
+    #     if 'created_at' in kwargs:
+    #         """ Drop The request """
+    #         return ERROR_EVENT(maasage="You can't update 'created_at' feild", code='0.5.1', typeevent='Usererror')
 
-        if 'updated_at' in kwargs:
-            """ Drop The request """
-            return ERROR_EVENT(maasage="You can't update 'updated_at' feild", code='0.5.2', typeevent='Usererror')
+    #     if 'updated_at' in kwargs:
+    #         """ Drop The request """
+    #         return ERROR_EVENT(maasage="You can't update 'updated_at' feild", code='0.5.2', typeevent='Usererror')
 
-        if is_list_part_of(kwargs.keys(), __dict__.keys()):    
-            self.__dict__.update(kwargs)
-        else:
-            return ERROR_EVENT(maasage="You can't update, data not compatible", code='0.5.3', typeevent='Usererror')
+    #     if is_list_part_of(kwargs.keys(), __dict__.keys()):    
+    #         self.__dict__.update(kwargs)
+    #     else:
+    #         return ERROR_EVENT(maasage="You can't update, data not compatible", code='0.5.3', typeevent='Usererror')
 
-        db_session.save()
+    #     db_session.save()
 
 
     def to_dict(self):
