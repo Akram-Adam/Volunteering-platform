@@ -106,7 +106,7 @@ export default {
         {
           id: 1,
           title: "Community Cleanup",
-          description: "Join us in cleaning our local park.",
+          description: "Assist in cleaning local parks.",
           category: "Environment",
           availability: "Weekends",
           location: "Central Park",
