@@ -18,7 +18,7 @@ class Volunteering(BaseModel, Base):
     description = Column(String(1024), nullable=True)
     profile_id = Column(Integer, ForeignKey('profiles.id'), nullable=False)
 
-    profile = relationship('profiles', back_populates='volunteering')
+    profile = relationship('Profile', back_populates='volunteers')
 
     def __init__(self, *args, **kwargs):
         """Initializes the volunteering"""

@@ -19,7 +19,7 @@ class Education(BaseModel, Base):
     description = Column(String(1024), nullable=True)
     profile_id = Column(Integer, ForeignKey('profiles.id'), nullable=False)
 
-    profile = relationship('profiles', back_populates='education')
+    profile = relationship('Profile', back_populates='educations')
 
     def __init__(self, *args, **kwargs):
         """Initializes the education"""

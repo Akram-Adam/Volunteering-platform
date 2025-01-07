@@ -2,7 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import jwt
 from datetime import datetime, timedelta
-from routes.User import USER
+# from routes.User import USER
+from models.user import User
 
 
 def create_app():
@@ -21,7 +22,7 @@ def create_app():
 
     return app
 
-app = create_app()
+# app = create_app()
 
 
 # def generate_jwt(email):
@@ -79,7 +80,11 @@ app = create_app()
 #     return jsonify({"message": "Invalid or expired token"}), 401
 
 
-
 if __name__ == '__main__':
-   
-    app.run(debug = True)
+
+    # app.run(debug = True)
+
+    # test user data
+    data_user = User(email="test@gmail.com", password="test123@123#TEST",
+                     first_name="test", last_name="test", phone_number="1234567890",
+                     address="test address", city="test city", state="test state", zip_code="12345")

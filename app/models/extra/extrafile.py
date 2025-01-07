@@ -38,5 +38,4 @@ def get_Config_data(path):
         print(f"Error: Permission denied when trying to open '{path}'.")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
-    
     return Config_data_return

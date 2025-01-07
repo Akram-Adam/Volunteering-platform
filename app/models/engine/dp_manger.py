@@ -15,10 +15,11 @@ from models.user import User
 from models.profileModles.certification import Certification
 from models.profileModles.education import Education
 from models.profileModles.experience import Experience
-from models.profileModles.languages import Languages
-from models.profileModles.skills import Skills
+from models.profileModles.languages import Language
+from models.profileModles.skills import Skill
 from models.profileModles.voluntering import Volunteering
-from models.profileModles.intersts import Interests
+from models.profileModles.intersts import Interest
+from models.profileModles.social import Social
 
 
 
@@ -30,7 +31,7 @@ class DBStorage:
      
     def __init__(self):
         """ Constructor of the class make instance database """
-        configdata= get_Config_data('config.txt')
+        configdata= get_Config_data('./app/config.txt')
 
         mysql_user = configdata['dpuser']
         mysql_pwd = configdata['dpuserpass']
@@ -197,8 +198,8 @@ class DBStorage:
         # Mapping of class names to class objects
         classes = {
             'User': User, 'Certification': Certification, 'Education': Education,
-            'Experience': Experience, 'Languages': Languages, 'Skills': Skills,
-            'Volunteering': Volunteering, 'Interests': Interests #add more classes here
+            'Experience': Experience, 'Languages': Language, 'Skills': Skill,
+            'Volunteering': Volunteering, 'Interests': Interest, 'Social' : Social # add more classes here
         }
 
         if class_name in classes:

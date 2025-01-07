@@ -6,13 +6,13 @@ from models.base_model import BaseModel, Base
 
 
 
-class Interests(BaseModel, Base):
+class Interest(BaseModel, Base):
     """This class defines the interests model"""
     __tablename__ = 'interests'
     name = Column(String(128), nullable=False)
     profile_id = Column(Integer, ForeignKey('profiles.id'), nullable=False)
 
-    profile = relationship('profiles', back_populates='interests')
+    profile = relationship('Profile', back_populates='interests')
 
     def __init__(self, *args, **kwargs):
         """Initializes the interests"""

@@ -2,6 +2,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 import bcrypt
+from models.profile import Profile
 
 """This gonna be user logic module for the app"""
 
@@ -18,9 +19,10 @@ class User(BaseModel, Base):
     country = Column(String(128), nullable=True)
     address = Column(String(128), nullable=True)
     zip_code = Column(String(128), nullable=True)
-    status = Column(String(128), nullable=True) # active, inactive :: default inactive change to active after email verification
-    role = Column(String(128), nullable=True) # admin, user
-    profile = relationship('profiles', back_populates='user')
+    # active, inactive :: default inactive change to active after email verification
+    status = Column(String(128), nullable=True)
+    role = Column(String(128), nullable=True)  # admin, user
+    profile = relationship("Profile", back_populates="user")
 
     """Initializes a user
     Args:
@@ -29,6 +31,7 @@ class User(BaseModel, Base):
     and change the password to hash
     
     """
+
     def __init__(self, *args, **kwargs):
         """Initializes a user"""
         super().__init__(*args, **kwargs)
@@ -47,7 +50,7 @@ class User(BaseModel, Base):
         from models import db_session
 
         UserData = db_session.getuser(email)
-        # check the existance of the account 
+        # check the existance of the account
         if UserData:
             # check password not None
             if password:
@@ -61,7 +64,8 @@ class User(BaseModel, Base):
         Hash the password and store it.
         """
         salt = bcrypt.gensalt()
-        hashed_password = bcrypt.hashpw(password_string_and_not_hashed.encode('utf-8'), salt)
+        hashed_password = bcrypt.hashpw(
+            password_string_and_not_hashed.encode('utf-8'), salt)
         self.user_password = hashed_password.decode('utf-8')
 
     def verify_password(self, password):

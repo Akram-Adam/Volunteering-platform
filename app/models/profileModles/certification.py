@@ -19,7 +19,7 @@ class Certification(BaseModel, Base):
     associated_skill = Column(String(128), nullable=True)
     profile_id = Column(Integer, ForeignKey('profiles.id'), nullable=False)
 
-    profile = relationship('profiles', back_populates='certifications')
+    profile = relationship('Profile', back_populates='certifications')
 
     def __init__(self, *args, **kwargs):
         ''' Initializes the certification '''

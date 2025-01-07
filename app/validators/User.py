@@ -2,7 +2,7 @@
 This module contain method that gonna validate all the data in the request for user and profile
 It should return True or ERROR_EVENT
 """
-from app.validators import ERROR_EVENT
+from validators import ERROR_EVENT
 import re
     
 # First for user data validation in sign up and password validation  

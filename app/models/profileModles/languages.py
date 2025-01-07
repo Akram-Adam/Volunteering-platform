@@ -6,13 +6,13 @@ from models.base_model import BaseModel, Base
 
 
 
-class Languages(BaseModel, Base):
+class Language(BaseModel, Base):
     """This class defines the languages model"""
     __tablename__ = 'languages'
     name = Column(String(128), nullable=False)
     profile_id = Column(Integer, ForeignKey('profiles.id'), nullable=False)
 
-    profile = relationship('profiles', back_populates='languages')
+    profile = relationship('Profile', back_populates='languages')
 
     def __init__(self, *args, **kwargs):
         """Initializes the languages"""

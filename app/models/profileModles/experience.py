@@ -17,7 +17,7 @@ class Experience(BaseModel, Base):
     description = Column(String(1024), nullable=True)
     profile_id = Column(Integer, ForeignKey('profiles.id'), nullable=False)
 
-    profile = relationship('profiles', back_populates='experience')
+    profile = relationship('Profile', back_populates='experience')
 
     def __init__(self, *args, **kwargs):
         """Initializes the experience"""
