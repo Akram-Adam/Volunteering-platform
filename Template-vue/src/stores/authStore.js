@@ -47,7 +47,7 @@ export const useAuthStore = defineStore('auth', {
 
 // User data can be stored in store or session state
 this.user = response.data.user; // Save user data if the response contains it
-this.$router.push("/login"); // Redirect to the login page
+router.push("/login"); // Redirect to the login page
         }
       } catch (error) {
 // If an error occurs in the request

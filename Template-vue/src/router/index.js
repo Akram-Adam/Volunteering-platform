@@ -1,13 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 // General Views
-import HomeView from '../views/MainViews/Landingpage.vue'
+
 import Landingpage from '../views/MainViews/Landingpage.vue'
 import SignUp from '@/views/MainViews/SignUp.vue'
 import LogIn from '../views/MainViews/LogIn.vue'
 import ForgotPassword from '../views/MainViews/forgot-password.vue';
+import ResetPassword from '../views/MainViews/ResetPassword.vue'
 import MainPage from '../views/MainViews/MainPage.vue'
 import AboutUs from '@/views/MainViews/AboutUs.vue'
-import ContactUs from '@/views/MainViews/ContactUs.vue'
+
 
 // Volunteer Views and Components
 import VolunteerDashboard from '../views/VolunteerViews/VolunteerDashboard.vue'
@@ -25,6 +26,7 @@ import RequestOpportunity from '@/components/RequestOpportunity.vue'
 
 // General Components
 import MessageComponent from '@/components/GeneralComponents/MessageComponent.vue'  // General component
+
 
 // unused components
 //import VolunteerOpportunities from '../views/VolunteerOpportunities.vue'
@@ -46,6 +48,11 @@ const router = createRouter({
       path: "/login",
       name: "LogIn",
       component: LogIn,
+    },
+    {
+      path: "/login/forgot-password/reset-password",
+      name: "ResetPassword",
+      component: ResetPassword,
     },
     {
       path: "/login/forgot-password",
