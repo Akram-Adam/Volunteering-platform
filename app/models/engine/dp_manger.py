@@ -53,9 +53,9 @@ class DBStorage:
         # Create a session
         self.__session = Session()
 
-        # if mysqlmood == 'test':
-        #     print('all data have been deleted befor start')
-        #     Base.metadata.drop_all(self.__engine)
+        if mysqlmood == 'test':
+            print('all data have been deleted befor start')
+            Base.metadata.drop_all(self.__engine)
 
     def clean_for_testing(self,test=True):
         if test:
@@ -194,7 +194,7 @@ class DBStorage:
         Method to return instances by attribute.
         :param class_name: str  :: Name of the class to query
         :param attrib: str  :: Attribute in the format attribute=value
-        :return: Instance that matches the attribute condition, or None if not found
+        :return: List of instances that match the attribute condition, or None if not found
         """
         # Mapping of class names to class objects
         classes = {
@@ -218,7 +218,7 @@ class DBStorage:
                     # Dynamically build the query
                     objects = self.__session.query(model_class).filter(
                         getattr(model_class, attribute_name) == attribute_value
-                    )
+                    ).all()
                     return objects
                 else:
                     raise AttributeError(f"{class_name} has no attribute '{attribute_name}'")

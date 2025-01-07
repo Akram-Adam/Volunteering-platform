@@ -92,3 +92,6 @@ if __name__ == '__main__':
                      frist_name="test", last_name="test", phone_number="1234567890",
                      address="test address", city="test city", state="test state", zip_code="12345")
     data_user.save()
+
+    print(db_session.get_data('User' ,"email=test@gmail.com"))
+    user_data = db_session.getuser("test@gmail.com")
