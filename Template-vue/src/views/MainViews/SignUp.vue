@@ -89,7 +89,7 @@
 import PageHeader from '@/components/GeneralComponents/PageHeader.vue';
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import Swal from "sweetalert2";
+import { useAuthStore } from '@/stores/authStore';// Import the store
 
 export default {
   name: "SignUp",
@@ -97,6 +97,7 @@ export default {
     PageHeader,
   },
   setup() {
+    const authStore = useAuthStore(); // Use the store
     const router = useRouter();
     const name = ref("");
     const email = ref("");
@@ -106,33 +107,17 @@ export default {
     const confirmPassword = ref("");
 
     const handleSignUp = () => {
-      if (password.value !== confirmPassword.value) {
-        Swal.fire({
-          icon: "error",
-          title: "Passwords Don't Match!",
-          text: "Please ensure both passwords are identical.",
-        });
-        return;
-      }
+      const userData = {
+        name: name.value,
+        email: email.value,
+        phone: phone.value,
+        gender: gender.value,
+        password: password.value,
+        confirmPassword: confirmPassword.value,
+      };
 
-      // Mock storing user details in a backend or database
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          name: name.value,
-          email: email.value,
-          phone: phone.value,
-          gender: gender.value,
-          password: password.value,
-        })
-      );
-
-      Swal.fire({
-        icon: "success",
-        title: "Sign-up Successful!",
-        text: "You can now log in with your account.",
-        confirmButtonColor: "#3E5879",
-      }).then(() => {
+// Call action to register the user
+      authStore.signUp(userData).then(() => {
         router.push("/login");
       });
     };
@@ -143,5 +128,5 @@ export default {
 </script>
 
 <style scoped>
-/* Add any specific styling you need */
+
 </style>

@@ -29,21 +29,25 @@
         </div>
 
         <!-- Error Message -->
-        <p v-if="errorMessage" class="text-red-500 text-sm mb-4">{{ errorMessage }}</p>
+        <p v-if="authStore.errorMessage" class="text-red-500 text-sm mb-4">
+          {{ authStore.errorMessage }}
+        </p>
 
         <!-- Submit Button -->
         <button
           type="submit"
+          :disabled="authStore.isLoading"
           class="w-full bg-[#3E5879] text-white py-2 px-4 rounded-lg shadow-md hover:bg-indigo-700 transition"
         >
-          Login
+          <span v-if="authStore.isLoading">Loading...</span>
+          <span v-else>Login</span>
         </button>
       </form>
 
       <!-- Forgot Password and Sign Up Links -->
       <div class="mt-6 text-center">
         <p class="text-sm text-gray-500">
-          <router-link to="/forgot-password" class="text-indigo-600 hover:underline">Forgot Password?</router-link>
+          <router-link to="/login/forgot-password" class="text-indigo-600 hover:underline">Forgot Password?</router-link>
         </p>
         <p class="text-sm text-gray-500 mt-2">
           Don't have an account?
@@ -55,62 +59,48 @@
 </template>
 
 <script>
-import PageHeader from '@/components/GeneralComponents/PageHeader.vue'; // Import the landing page header
-import Swal from 'sweetalert2'; // Import SweetAlert2
+import PageHeader from "@/components/GeneralComponents/PageHeader.vue";
+import Swal from "sweetalert2";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/autStore";
 
 export default {
   name: "LogIn",
-  components: {
-    PageHeader, // Register the PageHeader component
-  },
+  components: { PageHeader },
   setup() {
     const router = useRouter();
+    const authStore = useAuthStore();
+
     const email = ref("");
     const password = ref("");
-    const errorMessage = ref("");
 
-    const handleLogin = () => {
-      // Retrieve the user from localStorage
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (!user) {
-        errorMessage.value = "User not found. Please sign up.";
-        return;
+    const handleLogin = async () => {
+      await authStore.login({ email: email.value, password: password.value });
+
+      if (!authStore.errorMessage) {
+// After successful login, fetch the user data using the ID
+        await authStore.fetchUserById(authStore.user.id);
+
+        // Show success animation
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful!",
+          text: "You are now logged in.",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+
+        // Redirect to the main page
+        setTimeout(() => {
+          router.push("/main-page");
+        }, 2000);
       }
-
-      // Validate email and password
-      if (user.email !== email.value) {
-        errorMessage.value = "Incorrect email.";
-        return;
-      }
-      if (user.password !== password.value) {
-        errorMessage.value = "Incorrect password.";
-        return;
-      }
-
-      // Show success animation
-      Swal.fire({
-        icon: 'success',
-        title: 'Login Successful!',
-        text: 'You are now logged in.',
-        timer: 2000, // This will automatically close the popup after 2 seconds
-        showConfirmButton: false, // No need for confirm button
-      });
-
-      // Redirect to the Main component
-      setTimeout(() => {
-        router.push("/main-page");
-      }, 2000); // Delay the redirect until the SweetAlert closes
     };
 
-    return { email, password, errorMessage, handleLogin };
+    return { email, password, handleLogin, authStore };
   },
 };
 </script>
-
 <style scoped>
-.material-icons {
-  font-size: 20px;
-}
 </style>

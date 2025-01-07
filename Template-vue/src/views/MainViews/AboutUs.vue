@@ -56,7 +56,7 @@ export default {
         {
           name: 'Akram Adam',
           role: 'Frontend Developer',
-          linkedin: 'https://www.linkedin.com/in/akramadam',
+          linkedin: 'https://www.linkedin.com/in/akram-adam-16955422b/',
           image: AkramImage,
         },
         {
