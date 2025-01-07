@@ -2,6 +2,9 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -44,6 +47,7 @@ export const useAuthStore = defineStore('auth', {
 
 // User data can be stored in store or session state
 this.user = response.data.user; // Save user data if the response contains it
+this.$router.push("/login"); // Redirect to the login page
         }
       } catch (error) {
 // If an error occurs in the request
