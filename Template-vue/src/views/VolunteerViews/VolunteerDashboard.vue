@@ -114,36 +114,38 @@
 </template>
 
 <script>
-import MainHeader from '@/components/GeneralComponents/MainHeader.vue'; // Import the main page header
+import MainHeader from '@/components/GeneralComponents/MainHeader.vue';
 import MessageComponent from "@/components/GeneralComponents/MessageComponent.vue";
+import { useUserStore } from '@/stores/userStore'; // Import the store
 export default {
   name: "VolunteerDashboard",
   components: {
     MessageComponent,
     MainHeader,
-   },
+  },
   data() {
     return {
-      user: {
-        name: "John Doe", // Replace this with dynamic data from backend
-        photo: "", // Placeholder until user data is fetched
-      },
-      defaultPhoto: "https://via.placeholder.com/40", // Default photo if no picture is available
-      showChat: false, // Controls the visibility of the chat
+      defaultPhoto: "https://via.placeholder.com/40",
+      showChat: false,
       chatMessages: [
         { text: "Hello, how can I help you?", sender: "volunteer" },
         { text: "I need help with an upcoming event.", sender: "requester" },
       ],
     };
   },
+  computed: {
+    user() {
+      const userStore = useUserStore();
+      return userStore. user; // Get user data from Pinia store
+    },
+    isLoading() {
+      const userStore = useUserStore();
+      return userStore.isLoading; //To check the download status
+    },
+  },
   created() {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) {
-      this.user.name = storedUser.name || "Volunteer";
-      this.user.photo = storedUser.photo || "";
-    } else {
-      console.warn("User data not found in localStorage.");
-    }
+    const userStore = useUserStore();
+    userStore.fetchUserData(); // Fetch user data from API when component is loaded
   },
   methods: {
     toggleChat() {
@@ -156,7 +158,8 @@ export default {
       this.$router.push("/settings");
     },
     logout() {
-      localStorage.removeItem("user");
+      const userStore = useUserStore();
+      userStore.logout(); // Check out through Pinia store
       this.$router.push("/login");
     },
   },

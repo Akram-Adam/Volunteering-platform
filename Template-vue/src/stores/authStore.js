@@ -28,7 +28,7 @@ export const useAuthStore = defineStore('auth', {
 
       try {
 // Send registration data to the backend via POST
-        const response = await axios.post('localhost:<port>/api/signup', {
+        const response = await axios.post('http://localhost:5000/api/signup', {
           name: userData.name,
           email: userData.email,
           phone: userData.phone,
@@ -63,7 +63,7 @@ router.push("/login"); // Redirect to the login page
       this.isLoading = true;
       this.errorMessage = null;
       try {
-        const response = await axios.post('localhost:<port>/api/login', credentials);
+        const response = await axios.post('http://localhost:5000/api/login', credentials);
         const { user, token } = response.data;
 
         if (user && user.id) {

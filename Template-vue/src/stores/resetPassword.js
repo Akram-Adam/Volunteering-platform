@@ -13,7 +13,7 @@ export const useAuthStore = defineStore('auth', () => {
     errorMessage.value = ''; // Reset the error message
     successMessage.value = ''; // Reset success message
     try {
-      const response = await axios.post('/api/forgot-password', { email });
+      const response = await axios.post('http://localhost:5000/api/login', { email });
       successMessage.value = response.data.message; // Success message that comes from the server
     } catch (error) {
       errorMessage.value = error.response?.data?.message || 'There is a network error.';
@@ -29,7 +29,7 @@ export const useAuthStore = defineStore('auth', () => {
     successMessage.value = '';
 
     try {
-      const response = await axios.post('/api/reset-password', { token, password });
+      const response = await axios.post('http://localhost:5000/api/reset-password', { token, password });
       successMessage.value = response.data.message;
     } catch (error) {
       errorMessage.value = error.response?.data?.message || 'There is a network error.';
