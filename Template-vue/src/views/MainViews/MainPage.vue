@@ -53,13 +53,13 @@
     <!-- Action Buttons -->
     <div class="buttons mt-16 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
       <button
-        @click="goToVolunteerDashboard"
+        @click="selectRole('volunteer')"
         class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg shadow-lg text-lg"
       >
         I'm a Volunteer
       </button>
       <button
-        @click="goToRequesterDashboard"
+        @click="selectRole('requester')"
         class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg shadow-lg text-lg"
       >
         I Need Help
@@ -69,18 +69,46 @@
 </template>
 
 <script>
-import MainHeader from '@/components/GeneralComponents/MainHeader.vue'; // Import the landing page header
+import MainHeader from '@/components/GeneralComponents/MainHeader.vue'; // Import the header
+import axios from 'axios'; // Import Axios
+
 export default {
   name: "HowItWorks",
   components: {
-    MainHeader, // Register the Footer component
+    MainHeader,
+  },
+  data() {
+    return {
+      userRole: null, // Stores the selected role locally
+    };
+  },
+  async created() {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        // Optionally validate the token
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      } else {
+        this.$router.push("/login");
+      }
+    } catch (error) {
+      console.error("Authentication check failed:", error);
+      this.$router.push("/login");
+    }
   },
   methods: {
-    goToVolunteerDashboard() {
-      this.$router.push("/volunteer-dashboard");
-    },
-    goToRequesterDashboard() {
-      this.$router.push("/requester-dashboard");
+    selectRole(role) {
+      // Store the user's choice locally
+      this.userRole = role;
+      localStorage.setItem("userRole", role);
+
+      // Redirect based on the selected role
+      if (role === "volunteer") {
+        this.$router.push("/volunteer-dashboard");
+      } else if (role === "requester") {
+        this.$router.push("/requester-dashboard");
+      }
     },
   },
 };
