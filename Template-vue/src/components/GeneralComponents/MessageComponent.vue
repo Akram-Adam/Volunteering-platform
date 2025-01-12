@@ -10,13 +10,16 @@
 
     <!-- Chat Content -->
     <div class="flex-1 p-4 overflow-y-auto">
-      <div v-for="(message, index) in messages" :key="index" class="mb-4">
-        <div :class="message.sender === 'volunteer' ? 'text-right' : 'text-left'">
-          <div
-            class="inline-block px-4 py-2 rounded-lg"
-            :class="message.sender === 'volunteer' ? 'bg-[#3E5879] text-white' : 'bg-gray-200 text-gray-800'"
-          >
-            {{ message.text }}
+      <div v-if="loading" class="text-center text-gray-500">Loading messages...</div>
+      <div v-else>
+        <div v-for="(message, index) in messages" :key="index" class="mb-4">
+          <div :class="message.sender === 'volunteer' ? 'text-right' : 'text-left'">
+            <div
+              class="inline-block px-4 py-2 rounded-lg"
+              :class="message.sender === 'volunteer' ? 'bg-[#3E5879] text-white' : 'bg-gray-200 text-gray-800'"
+            >
+              {{ message.text }}
+            </div>
           </div>
         </div>
       </div>
@@ -43,35 +46,74 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   props: {
+    chatId: {
+      type: String,
+      required: true,
+    },
     chatTitle: {
       type: String,
       default: "Chat with Volunteer",
     },
-    initialMessages: {
-      type: Array,
-      default: () => [],
-    },
   },
   data() {
     return {
-      isChatOpen: true, // Chat visibility
-      messages: [...this.initialMessages], // Chat history
-      newMessage: "", // New message input
+      isChatOpen: true,
+      messages: [],
+      newMessage: "",
+      loading: true,
     };
   },
   methods: {
+    async fetchMessages() {
+      try {
+        const response = await axios.get(`/api/chats/${this.chatId}/messages`);
+        this.messages = response.data;
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      } finally {
+        this.loading = false;
+      }
+    },
+    async sendMessage() {
+      if (this.newMessage.trim()) {
+        const message = {
+          text: this.newMessage,
+          sender: "requester",
+        };
+
+        try {
+          const response = await axios.post(
+            `/api/chats/${this.chatId}/messages`,
+            message
+          );
+          this.messages.push(response.data); // Add the new message to the interface
+          this.newMessage = "";
+
+ // Automatic response to simulate volunteer
+          setTimeout(async () => {
+            const autoReply = {
+              text: "Thank you for your message! A volunteer will respond shortly.",
+              sender: "volunteer",
+            };
+            await axios.post(`/api/chats/${this.chatId}/messages`, autoReply);
+            this.messages.push(autoReply);
+          }, 1000);
+        } catch (error) {
+          console.error("Error sending message:", error);
+        }
+      }
+    },
     closeChat() {
       this.isChatOpen = false;
       this.$emit("closeChat");
     },
-    sendMessage() {
-      if (this.newMessage.trim()) {
-        this.messages.push({ text: this.newMessage, sender: "requester" });
-        this.newMessage = ""; // Clear input after sending
-      }
-    },
+  },
+  async mounted() {
+    await this.fetchMessages();
   },
 };
 </script>

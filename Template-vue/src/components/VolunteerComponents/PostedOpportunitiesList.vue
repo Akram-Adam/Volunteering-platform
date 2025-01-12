@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { useOpportunitiesStore } from "@/stores/useOpportunitiesStore ";
+import { useOpportunitiesStore } from "@/stores/volunteer/useOpportunitiesStore ";
 
 export default {
   name: "PostedOpportunitiesList",

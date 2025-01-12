@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { useVolunteerStore } from "@/stores/volunteerOverviewStore";
+import { useVolunteerStore } from "@/stores/volunteer/volunteerOverviewStore";
 
 
 export default {

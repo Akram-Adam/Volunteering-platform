@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import { useOpportunityStore } from "@/stores/opportunityStore.js";
+import { useOpportunityStore } from "@/stores/volunteer/opportunityStore.js";
 import { reactive } from "vue";
 
 export default {
