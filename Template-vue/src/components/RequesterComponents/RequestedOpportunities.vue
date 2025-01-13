@@ -146,63 +146,24 @@
 </template>
 
 <script>
+import { useRequestStore } from "@/stores/requester/requestStore";
+
 export default {
   name: "MyPostedRequests",
   data() {
     return {
       searchTitle: "",
       searchDate: "",
-      requests: [
-        {
-          id: 1,
-          title: "Gardening Help Needed",
-          date: "2025-01-02",
-          status: "Accepted",
-          volunteer: {
-            name: "Alice Johnson",
-            email: "alice.j@example.com",
-            phone: "123-456-7890",
-          },
-        },
-        {
-          id: 2,
-          title: "Need Assistance with Moving",
-          date: "2025-01-01",
-          status: "Pending",
-          volunteer: null,
-        },
-        {
-          id: 3,
-          title: "Math Tutoring for My Child",
-          date: "2024-12-30",
-          status: "Completed",
-          volunteer: {
-            name: "Bob Smith",
-            email: "bob.s@example.com",
-            phone: "987-654-3210",
-          },
-        },
-        {
-          id: 4,
-          title: "Event Decoration",
-          date: "2024-12-29",
-          status: "Pending",
-          volunteer: null,
-        },
-      ],
       selectedRequest: null, // Holds the selected request for details
       message: "", // Holds the message content
     };
   },
   computed: {
     filteredRequests() {
-      return this.requests.filter((request) => {
-        const matchesTitle = request.title
-          .toLowerCase()
-          .includes(this.searchTitle.toLowerCase());
-        const matchesDate = !this.searchDate || request.date === this.searchDate;
-        return matchesTitle && matchesDate;
-      });
+      return this.requestStore.filteredRequests(
+        this.searchTitle,
+        this.searchDate
+      );
     },
   },
   methods: {
@@ -224,11 +185,8 @@ export default {
     },
     cancelRequest(id) {
       if (confirm("Are you sure you want to cancel this request?")) {
-        const requestIndex = this.requests.findIndex((req) => req.id === id);
-        if (requestIndex !== -1) {
-          this.requests.splice(requestIndex, 1); // Remove the request from the list
-          alert("Request canceled successfully.");
-        }
+        this.requestStore.requests = this.requestStore.requests.filter((req) => req.id !== id);
+        alert("Request canceled successfully.");
       }
     },
     statusClass(status) {
@@ -243,6 +201,14 @@ export default {
           return "bg-gray-100 text-gray-700";
       }
     },
+  },
+  mounted() {
+    // Fetch requests when the component is mounted
+    this.requestStore.fetchRequests();
+  },
+  setup() {
+    const requestStore = useRequestStore();
+    return { requestStore };
   },
 };
 </script>
