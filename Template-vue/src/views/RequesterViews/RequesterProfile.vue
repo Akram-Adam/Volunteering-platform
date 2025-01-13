@@ -4,10 +4,11 @@
 
     <div class="profile-info">
       <div class="profile-picture">
-        <img :src="profilePicture" alt="Volunteer Picture" />
-        <input type="file" @change="uploadPicture" accept="image/*" />
+        <img :src="profileStore.profile?.profilePicture || '/default-profile.jpg'" alt="Profile Picture" class="w-full h-full object-cover" />
+        <input type="file" @change="onProfilePictureChange" accept="image/*" />
         <small v-if="errors.picture">{{ errors.picture }}</small>
       </div>
+
 
       <div class="profile-details">
         <div class="form-group">
@@ -120,8 +121,14 @@ export default {
     };
 
     onMounted(() => {
-      profileStore.fetchProfile();
-    });
+  profileStore.fetchProfile().then(() => {
+    if (!profileStore.profile) {
+      console.error("Profile data is not available.");
+    }
+  }).catch(error => {
+    console.error("Error fetching profile:", error);
+  });
+});
 
     return {
       profileStore,

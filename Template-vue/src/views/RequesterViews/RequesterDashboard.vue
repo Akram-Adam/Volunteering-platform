@@ -10,7 +10,7 @@
         <li>
           <router-link
             to="/requester-dashboard"
-            class="block py-2 flex items-center space-x-2 hover:bg-[#4A6C93] px-4 rounded transition"
+            class="block py-2 items-center space-x-2 hover:bg-[#4A6C93] px-4 rounded transition"
             active-class="bg-[#4A6C93]"
           >
             <span class="material-icons">dashboard</span>
@@ -20,7 +20,7 @@
         <li>
           <router-link
             to="/my-posted-requests"
-            class="block py-2 flex items-center space-x-2 hover:bg-[#4A6C93] px-4 rounded transition"
+            class="block py-2  items-center space-x-2 hover:bg-[#4A6C93] px-4 rounded transition"
             active-class="bg-[#4A6C93]"
           >
             <span class="material-icons">history</span>
@@ -30,7 +30,7 @@
         <li>
           <button
             @click="toggleChat"
-            class="block py-2 flex items-center space-x-2 hover:bg-[#4A6C93] px-4 rounded transition w-full text-left"
+            class="block py-2 items-center space-x-2 hover:bg-[#4A6C93] px-4 rounded transition w-full text-left"
           >
             <span class="material-icons">message</span>
             <span>Messages</span>
@@ -39,7 +39,7 @@
         <li>
           <router-link
             to="/requester-profile"
-            class="block py-2 flex items-center space-x-2 hover:bg-[#4A6C93] px-4 rounded transition"
+            class="block py-2  items-center space-x-2 hover:bg-[#4A6C93] px-4 rounded transition"
             active-class="bg-[#4A6C93]"
           >
             <span class="material-icons">person</span>
@@ -49,7 +49,7 @@
         <li>
           <router-link
             to="/request-opportunity"
-            class="block py-2 flex items-center space-x-2 hover:bg-[#4A6C93] px-4 rounded transition"
+            class="block py-2  items-center space-x-2 hover:bg-[#4A6C93] px-4 rounded transition"
             active-class="bg-[#4A6C93]"
           >
             <span class="material-icons">add_circle</span>

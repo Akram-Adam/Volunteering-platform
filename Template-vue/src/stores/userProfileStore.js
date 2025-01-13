@@ -9,7 +9,7 @@ export const useProfileStore = defineStore("profile", {
       phone: "",
       bio: "",
       skills: [],
-      profilePicture: null,
+      profilePicture: "",
     },
   }),
   actions: {
