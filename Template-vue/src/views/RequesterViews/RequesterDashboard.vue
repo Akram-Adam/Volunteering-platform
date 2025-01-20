@@ -76,22 +76,7 @@
               alt="Profile"
               class="w-10 h-10 rounded-full cursor-pointer"
             />
-            <div
-              class="absolute right-0 mt-2 bg-white border rounded shadow-md hidden group-hover:block"
-            >
-              <button
-                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left"
-                @click="goToSettings"
-              >
-                Settings
-              </button>
-              <button
-                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left"
-                @click="logout"
-              >
-                Log Out
-              </button>
-            </div>
+
           </div>
         </div>
       </header>
