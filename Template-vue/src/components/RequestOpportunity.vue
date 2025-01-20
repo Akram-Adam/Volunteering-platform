@@ -4,9 +4,9 @@
       <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Request Volunteer Opportunities</h1>
 
       <!-- Opportunity List -->
-      <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+      <div class="bg-white shadow-md rounded-lg p-6 mb-6" v-if="!opportunityStore.loading">
         <h2 class="text-2xl font-semibold text-gray-700 mb-4">Available Opportunities</h2>
-        <div v-for="opportunity in opportunities" :key="opportunity.id" class="border-b border-gray-200 pb-4 mb-4">
+        <div v-for="opportunity in opportunityStore.opportunities" :key="opportunity.id" class="border-b border-gray-200 pb-4 mb-4">
           <div class="flex justify-between items-center">
             <!-- Opportunity Details -->
             <div>
@@ -31,6 +31,9 @@
           </div>
         </div>
       </div>
+
+      <!-- Loading Spinner -->
+      <div v-if="opportunityStore.loading" class="text-center">Loading...</div>
 
       <!-- Request Form Modal -->
       <div
@@ -147,33 +150,12 @@
 </template>
 
 <script>
+import { useOpportunityStore } from '@/stores/requester/requstopportunityStore';  // Import the store
+
 export default {
   name: "RequestOpportunity",
   data() {
     return {
-      opportunities: [
-        {
-          id: 1,
-          title: "Blood Donation",
-          description: "Seeking a Some one need B+ blood type.",
-          availableSlots: 3,
-          totalSlots: 5,
-        },
-        {
-          id: 2,
-          title: "Tech Support for Setting Up a PC",
-          description: "Provide Assistance to set up a new computer system.",
-          availableSlots: 2,
-          totalSlots: 4,
-        },
-        {
-          id: 3,
-          title: "Tutoring Math for High School Student",
-          description: "Provide tutoring for children in algebra.",
-          availableSlots: 1,
-          totalSlots: 3,
-        },
-      ],
       showRequestForm: false,
       requestForm: {
         name: "",
@@ -183,6 +165,14 @@ export default {
         dynamicFields: [], // To hold dynamic form fields
       },
     };
+  },
+  computed: {
+    opportunityStore() {
+      return useOpportunityStore();
+    },
+  },
+  created() {
+    this.opportunityStore.fetchOpportunities();  // Fetch the opportunities when the component is created
   },
   methods: {
     openRequestForm(opportunity) {
@@ -209,18 +199,8 @@ export default {
         return;
       }
 
-      // Update the available slots for the requested opportunity
-      const opportunity = this.opportunities.find(
-        (op) => op.title === this.requestForm.title
-      );
-      if (opportunity && opportunity.availableSlots > 0) {
-        opportunity.availableSlots -= 1; // Decrease the available slots
-      }
-
-      // Here you can send the request data to your backend for processing
-      alert(`Your request for "${this.requestForm.title}" has been submitted!`);
-
-      // After submission, close the form and clear the data
+      // Call the submitRequest method from the store
+      this.opportunityStore.submitRequest(this.requestForm);
       this.closeRequestForm();
     },
   },
