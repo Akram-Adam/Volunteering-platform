@@ -1,34 +1,31 @@
-import { defineStore } from "pinia";
-import axios from "axios";
+import { defineStore } from 'pinia';
 
-export const useProfileStore = defineStore("profile", {
+export const useUserStore = defineStore('user', {
   state: () => ({
-    profile: {
-      name: "",
-      email: "",
-      phone: "",
-      bio: "",
+    user: {
+      name: '',
+      email: '',
+      phone: '',
+      bio: '',
       skills: [],
-      profilePicture: "",
+      profilePicture: '',
     },
   }),
   actions: {
-    async fetchProfile() {
+    async fetchUser() {
       try {
-        const response = await axios.get("/api/profile"); // تعديل URL حسب الحاجة
-        this.profile = response.data;
+        const response = await axios.get('/api/user'); // استبدل بـ API المناسب
+        this.user = response.data;
       } catch (error) {
-        console.error("Failed to fetch profile:", error);
+        console.error('Error fetching user:', error);
       }
     },
-    async updateProfile(updatedProfile) {
+    async updateUser(updatedUser) {
       try {
-        const response = await axios.put("/api/profile", updatedProfile); // تعديل URL حسب الحاجة
-        this.profile = response.data;
-        return true;
+        const response = await axios.put('/api/user', updatedUser); // استبدل بـ API المناسب
+        this.user = response.data;
       } catch (error) {
-        console.error("Failed to update profile:", error);
-        return false;
+        console.error('Error updating user:', error);
       }
     },
   },

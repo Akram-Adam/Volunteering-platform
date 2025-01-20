@@ -1,247 +1,198 @@
 <template>
-  <div class="volunteer-profile">
-    <h1>Volunteer Profile</h1>
-
-    <div class="profile-info">
-      <div class="profile-picture">
-        <img :src="profilePicture" alt="Volunteer Picture" />
-        <input type="file" @change="uploadPicture" accept="image/*" />
-        <small v-if="errors.picture">{{ errors.picture }}</small>
+  <div class="max-w-4xl mx-auto p-6">
+    <h1 class="text-2xl font-bold mb-4">Profile</h1>
+    <div class="bg-white shadow rounded-lg p-6">
+      <!-- Profile Picture at the Top -->
+      <div class="flex flex-col items-center mb-6">
+        <img
+          v-if="user.profilePicture"
+          :src="user.profilePicture"
+          alt="Profile"
+          class="w-24 h-24 rounded-full mb-4"
+        />
+        <input type="file" @change="uploadPicture" class="hidden" ref="fileInput" />
+        <button
+          @click="triggerFileInput"
+          class="bg-blue-500 text-white px-4 py-2 rounded-md"
+        >
+          Change Profile Picture
+        </button>
       </div>
 
-      <div class="profile-details">
-        <div class="form-group">
-          <label>Full Name:</label>
-          <input v-model="name" placeholder="Enter your full name" />
-          <small v-if="errors.name">{{ errors.name }}</small>
+      <form @submit.prevent="updateProfile">
+        <!-- Edit Mode Toggle -->
+        <div class="mb-4">
+          <button
+            type="button"
+            @click="toggleEditMode"
+            class="bg-green-500 text-white px-4 py-2 rounded-md"
+          >
+            {{ isEditMode ? 'Disable Edit Mode' : 'Enable Edit Mode' }}
+          </button>
         </div>
 
-        <div class="form-group">
-          <label>Email:</label>
-          <input v-model="email" type="email" placeholder="example@email.com" />
-          <small v-if="errors.email">{{ errors.email }}</small>
+        <!-- Name -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Name</label>
+          <input
+            type="text"
+            v-model="user.name"
+            :disabled="!isEditMode"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+          />
         </div>
 
-        <div class="form-group">
-          <label>Phone Number:</label>
-          <input v-model="phone" type="tel" placeholder="123-456-7890" />
-          <small v-if="errors.phone">{{ errors.phone }}</small>
+        <!-- Email (read-only) -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Email</label>
+          <input
+            type="email"
+            v-model="user.email"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-gray-100"
+            readonly
+          />
         </div>
-      </div>
+
+        <!-- Phone -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Phone</label>
+          <input
+            type="text"
+            v-model="user.phone"
+            :disabled="!isEditMode"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+          />
+        </div>
+
+        <!-- Bio -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Bio</label>
+          <textarea
+            v-model="user.bio"
+            :disabled="!isEditMode"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+          ></textarea>
+        </div>
+
+        <!-- Skills -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Skills</label>
+          <input
+            type="text"
+            v-model="skillsInput"
+            @keyup.enter="addSkill"
+            :disabled="!isEditMode"
+            placeholder="Add a skill and press Enter"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+          />
+          <div class="flex flex-wrap gap-2 mt-2">
+            <span
+              v-for="(skill, index) in user.skills"
+              :key="index"
+              class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full"
+            >
+              {{ skill }}
+              <button
+                v-if="isEditMode"
+                @click="removeSkill(index)"
+                class="ml-2 text-red-500"
+              >
+                x
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">New Password</label>
+          <input
+            type="password"
+            v-model="password"
+            :disabled="!isEditMode"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+          />
+        </div>
+
+        <!-- Actions -->
+        <div class="mt-6" v-if="isEditMode">
+          <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">
+            Save Changes
+          </button>
+        </div>
+      </form>
     </div>
-
-    <div class="form-group">
-      <label>Bio:</label>
-      <textarea v-model="bio" placeholder="Write your bio here"></textarea>
-    </div>
-
-    <div class="form-group">
-      <label>Skills:</label>
-      <vue-tags-input
-        v-model="skillInput"
-        :tags="skills"
-        @tags-changed="updateSkills"
-        placeholder="Add your skills here"
-      />
-    </div>
-
-    <div class="form-group">
-      <label>Current Password:</label>
-      <input v-model="currentPassword" type="password" placeholder="Enter your current password" />
-    </div>
-
-    <div class="form-group">
-      <label>New Password:</label>
-      <input v-model="newPassword" type="password" placeholder="Enter a new password" />
-      <small v-if="errors.password">{{ errors.password }}</small>
-    </div>
-
-    <div class="form-group">
-      <label>Confirm Password:</label>
-      <input v-model="confirmPassword" type="password" placeholder="Re-enter the new password" />
-      <small v-if="errors.confirmPassword">{{ errors.confirmPassword }}</small>
-    </div>
-
-    <button @click="saveChanges">Save Changes</button>
-    <button @click="previewChanges">Preview</button>
-
-    <small v-if="successMessage" class="success">{{ successMessage }}</small>
   </div>
 </template>
 
 <script>
-import { defineStore } from 'pinia';
+import { useUserStore } from '@/stores/userProfileStore';
 import { ref } from 'vue';
-import VueTagsInput from '@johmun/vue-tags-input';
-
-const useProfileStore = defineStore('profile', {
-  state: () => ({
-    name: '',
-    email: '',
-    phone: '',
-    bio: '',
-    skills: [],
-    profilePicture: '',
-  }),
-  actions: {
-    async fetchProfile() {
-      // Replace with actual API call
-      const response = await fetch('/api/profile');
-      const data = await response.json();
-      Object.assign(this, data);
-    },
-    async updateProfile(payload) {
-      // Replace with actual API call
-      await fetch('/api/profile', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-    },
-  },
-});
 
 export default {
-  components: {
-    VueTagsInput,
-  },
+  name: "VolunteerProfile",
   setup() {
-    const store = useProfileStore();
+    const userStore = useUserStore();
+    const user = ref(userStore.user);
+    const skillsInput = ref('');
+    const password = ref('');
+    const isEditMode = ref(false);
+    const fileInput = ref(null);
 
-    const errors = ref({});
-    const successMessage = ref('');
-    const skillInput = ref('');
-
-    store.fetchProfile();
-
-    const validateEmail = (email) => {
-      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return re.test(email);
+    const toggleEditMode = () => {
+      isEditMode.value = !isEditMode.value;
     };
 
-    const saveChanges = async () => {
-      errors.value = {};
+    const triggerFileInput = () => {
+      fileInput.value.click();
+    };
 
-      if (!store.name) {
-        errors.value.name = 'Name is required';
+    const addSkill = () => {
+      if (skillsInput.value.trim()) {
+        user.value.skills.push(skillsInput.value.trim());
+        skillsInput.value = '';
       }
+    };
 
-      if (!store.email || !validateEmail(store.email)) {
-        errors.value.email = 'Invalid email';
-      }
-
-      if (!store.phone) {
-        errors.value.phone = 'Phone number is required';
-      }
-
-      if (Object.keys(errors.value).length === 0) {
-        await store.updateProfile({
-          name: store.name,
-          email: store.email,
-          phone: store.phone,
-          bio: store.bio,
-          skills: store.skills,
-          profilePicture: store.profilePicture,
-        });
-        successMessage.value = 'Changes saved successfully!';
-      }
+    const removeSkill = (index) => {
+      user.value.skills.splice(index, 1);
     };
 
     const uploadPicture = (event) => {
       const file = event.target.files[0];
-      if (file.size > 2 * 1024 * 1024) {
-        errors.value.picture = 'Image size must be less than 2MB';
-      } else {
-        store.profilePicture = URL.createObjectURL(file);
-        errors.value.picture = '';
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          user.value.profilePicture = e.target.result;
+        };
+        reader.readAsDataURL(file);
       }
     };
 
-    const previewChanges = () => {
-      alert('Preview Changes:\n' + JSON.stringify({
-        name: store.name,
-        email: store.email,
-        phone: store.phone,
-        bio: store.bio,
-        skills: store.skills,
-      }, null, 2));
+    const updateProfile = async () => {
+      await userStore.updateUser(user.value);
+      alert('Profile updated successfully!');
     };
 
     return {
-      ...store,
-      errors,
-      successMessage,
-      skillInput,
-      validateEmail,
-      saveChanges,
+      user,
+      skillsInput,
+      password,
+      isEditMode,
+      fileInput,
+      toggleEditMode,
+      triggerFileInput,
+      addSkill,
+      removeSkill,
       uploadPicture,
-      previewChanges,
+      updateProfile,
     };
   },
 };
 </script>
 
 <style scoped>
-.volunteer-profile {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background: #f9f9f9;
-}
-
-.profile-info {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.profile-picture img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-input,
-textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-.success {
-  color: green;
-}
-
-small {
-  color: red;
+.hidden {
+  display: none;
 }
 </style>
