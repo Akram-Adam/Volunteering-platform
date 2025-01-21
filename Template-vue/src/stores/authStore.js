@@ -2,32 +2,29 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { useRouter } from "vue-router";
-
-const router = useRouter();
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    user: null, // user data
-    token: null, // token
+    user: null, // User data
+    token: localStorage.getItem('token') || null, // Token stored in localStorage
     isLoading: false, // Loading status
-    errorMessage: null, // error messages
+    errorMessage: null, // Error messages
   }),
   actions: {
     // Sign up
-    async signUp(userData) {
-// Check that the password matches
+    async signUp(userData,router ) {
+      // Check that the passwords match
       if (userData.password !== userData.confirmPassword) {
         Swal.fire({
           icon: "error",
           title: "Passwords Don't Match!",
           text: "Please ensure both passwords are identical.",
         });
-        return;
-      }
+          return;
+        }
 
       try {
-// Send registration data to the backend via POST
+        // Send registration data to the backend via POST
         const response = await axios.post('http://localhost:5000/api/signup', {
           name: userData.name,
           email: userData.email,
@@ -36,8 +33,8 @@ export const useAuthStore = defineStore('auth', {
           password: userData.password,
         });
 
-// If the response was successful
-        if (response.status === 200) {
+        // If the response was successful
+        if ( response.status === 200) {
           Swal.fire({
             icon: "success",
             title: "Sign-up Successful!",
@@ -45,51 +42,118 @@ export const useAuthStore = defineStore('auth', {
             confirmButtonColor: "#3E5879",
           });
 
-// User data can be stored in store or session state
-this.user = response.data.user; // Save user data if the response contains it
-router.push("/login"); // Redirect to the login page
-        }
+          // Redirect to the login page
+          router.push("/main-page");
+
+      }
       } catch (error) {
-// If an error occurs in the request
         Swal.fire({
           icon: "error",
           title: "Sign-up Failed",
-          text: error.response ? error.response.data.message : 'An error occurred. Please try again.',
-        });
+          text: error.response?.data?.message || 'An error occurred. Please try again.',
+          });
+          console.log(error);
       }
     },
-    //Log in
-    async login(credentials) {
+
+    // Log in
+    async login(credentials , router) {
       this.isLoading = true;
       this.errorMessage = null;
       try {
         const response = await axios.post('http://localhost:5000/api/login', credentials);
         const { user, token } = response.data;
 
-        if (user && user.id) {
+        if (user && token) {
           this.user = user;
           this.token = token;
 
           // Save the token to localStorage
           localStorage.setItem('token', token);
-          // Setting the token in the request headers
+
+          // Set the token in the headers for future requests
           axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        } else {
-          throw new Error('Invalid user data.');
+
+          // Redirect to the home page or dashboard
+          if (router) {
+            router.push("/main-page");
+          } else {
+            console.error("Router is not defined!");
+          }
+        }
+          else {
+          throw new Error('Invalid login response.');
         }
       } catch (error) {
-        this.errorMessage = error.response?.data?.message || 'Registration failed. Please try again.';
+        this.errorMessage = error.response?.data?.message ;
+        Swal.fire({
+          icon: "error",
+          title: "Login Failed",
+          text: this.errorMessage,
+        });
       } finally {
         this.isLoading = false;
       }
     },
 
-    // logout
-    logout() {
+    // Fetch user data (protected route)
+    async fetchUserById(userId) {
+      try {
+        // Ensure token is in the headers
+        axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
+
+        // Fetch user data from the API
+        const response = await axios.get(`http://localhost:5000/api/users/${userId}`);
+
+        this.user = response.data;
+        return response.data;
+      } catch (error) {
+        console.error('Error fetching user by ID:', error);
+        Swal.fire({
+          icon: "error",
+          title: "Fetch Failed",
+          text: 'Could not fetch user data. Please log in again.',
+        });
+
+        // If the token is invalid or expired, log out
+        this.logout();
+      }
+    },
+
+    // Log out
+    logout(router) {
       this.user = null;
       this.token = null;
-      delete axios.defaults.headers.common['Authorization'];
+
+      // Remove token from localStorage and Axios headers
       localStorage.removeItem('token');
+      delete axios.defaults.headers.common['Authorization'];
+
+      // Redirect to the login page
+      router.push("/login");
+    },
+
+    // Check authentication status
+    async checkAuth() {
+      if (!this.token) {
+        this.logout();
+        return false;
+      }
+
+      try {
+        // Validate token with the server
+        axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
+        const response = await axios.get('http://localhost:5000/api/auth/validate');
+
+        if (response.status === 200) {
+          this.user = response.data.user;
+          return true;
+        }
+      } catch (error) {
+        console.error('Authentication validation failed:', error);
+        this.logout();
+        return false;
+      }
     },
   },
 });

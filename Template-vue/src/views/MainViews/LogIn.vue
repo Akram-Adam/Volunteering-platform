@@ -76,25 +76,13 @@ export default {
     const password = ref("");
 
     const handleLogin = async () => {
-      await authStore.login({ email: email.value, password: password.value });
+      await authStore.login({ email: email.value, password: password.value , router });
 
       if (!authStore.errorMessage) {
 // After successful login, fetch the user data using the ID
-        await authStore.fetchUserById(authStore.user.id);
-
-        // Show success animation
-        Swal.fire({
-          icon: "success",
-          title: "Login Successful!",
-          text: "You are now logged in.",
-          timer: 2000,
-          showConfirmButton: false,
-        });
+         const user = authStore.user;
 
         // Redirect to the main page
-        setTimeout(() => {
-          router.push("/main-page");
-        }, 2000);
       }
     };
 
