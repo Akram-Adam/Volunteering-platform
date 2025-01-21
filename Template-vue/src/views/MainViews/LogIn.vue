@@ -76,7 +76,7 @@ export default {
     const password = ref("");
 
     const handleLogin = async () => {
-      await authStore.login({ email: email.value, password: password.value , router });
+      await authStore.login({ email: email.value, password: password.value }, router);
 
       if (!authStore.errorMessage) {
 // After successful login, fetch the user data using the ID

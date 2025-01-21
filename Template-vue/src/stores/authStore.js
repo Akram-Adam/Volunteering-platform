@@ -1,7 +1,7 @@
 // store for authentication
-import { defineStore } from 'pinia';
-import axios from 'axios';
-import Swal from 'sweetalert2';
+import { defineStore } from 'pinia'
+import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -12,16 +12,16 @@ export const useAuthStore = defineStore('auth', {
   }),
   actions: {
     // Sign up
-    async signUp(userData,router ) {
+    async signUp(userData, router) {
       // Check that the passwords match
       if (userData.password !== userData.confirmPassword) {
         Swal.fire({
-          icon: "error",
+          icon: 'error',
           title: "Passwords Don't Match!",
-          text: "Please ensure both passwords are identical.",
-        });
-          return;
-        }
+          text: 'Please ensure both passwords are identical.',
+        })
+        return
+      }
 
       try {
         // Send registration data to the backend via POST
@@ -31,68 +31,67 @@ export const useAuthStore = defineStore('auth', {
           phone: userData.phone,
           gender: userData.gender,
           password: userData.password,
-        });
+        })
 
         // If the response was successful
-        if ( response.status === 200) {
+        if (response.status === 200) {
           Swal.fire({
-            icon: "success",
-            title: "Sign-up Successful!",
-            text: "You can now log in with your account.",
-            confirmButtonColor: "#3E5879",
-          });
+            icon: 'success',
+            title: 'Sign-up Successful!',
+            text: 'You can now log in with your account.',
+            confirmButtonColor: '#3E5879',
+          })
 
           // Redirect to the login page
-          router.push("/main-page");
-
-      }
+          router.push('/main-page')
+        }
       } catch (error) {
         Swal.fire({
-          icon: "error",
-          title: "Sign-up Failed",
+          icon: 'error',
+          title: 'Sign-up Failed',
           text: error.response?.data?.message || 'An error occurred. Please try again.',
-          });
-          console.log(error);
+        })
+        console.log(error)
       }
     },
 
     // Log in
-    async login(credentials , router) {
-      this.isLoading = true;
-      this.errorMessage = null;
+    async login(credentials, router) {
+      this.isLoading = true
+      this.errorMessage = null
       try {
-        const response = await axios.post('http://localhost:5000/api/login', credentials);
-        const { user, token } = response.data;
+        const response = await axios.post('http://localhost:5000/api/login', credentials)
+        const { user, token } = response.data
 
         if (user && token) {
-          this.user = user;
-          this.token = token;
+          this.user = user
+          this.token = token
 
           // Save the token to localStorage
-          localStorage.setItem('token', token);
+          localStorage.setItem('token', token)
 
           // Set the token in the headers for future requests
-          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
           // Redirect to the home page or dashboard
           if (router) {
-            router.push("/main-page");
+            router.push('/main-page')
           } else {
-            console.error("Router is not defined!");
+            console.error('Router is not defined!')
           }
-        }
-          else {
-          throw new Error('Invalid login response.');
+        } else {
+          throw new Error('Invalid login response.')
         }
       } catch (error) {
-        this.errorMessage = error.response?.data?.message ;
+        this.errorMessage = error.response?.data?.message
         Swal.fire({
-          icon: "error",
-          title: "Login Failed",
+          icon: 'error',
+          title: 'Login Failed',
           text: this.errorMessage,
-        });
+        })
+        console.log(error)
       } finally {
-        this.isLoading = false;
+        this.isLoading = false
       }
     },
 
@@ -100,60 +99,60 @@ export const useAuthStore = defineStore('auth', {
     async fetchUserById(userId) {
       try {
         // Ensure token is in the headers
-        axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
+        axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
 
         // Fetch user data from the API
-        const response = await axios.get(`http://localhost:5000/api/users/${userId}`);
+        const response = await axios.get(`http://localhost:5000/api/users/${userId}`)
 
-        this.user = response.data;
-        return response.data;
+        this.user = response.data
+        return response.data
       } catch (error) {
-        console.error('Error fetching user by ID:', error);
+        console.error('Error fetching user by ID:', error)
         Swal.fire({
-          icon: "error",
-          title: "Fetch Failed",
+          icon: 'error',
+          title: 'Fetch Failed',
           text: 'Could not fetch user data. Please log in again.',
-        });
+        })
 
         // If the token is invalid or expired, log out
-        this.logout();
+        this.logout()
       }
     },
 
     // Log out
     logout(router) {
-      this.user = null;
-      this.token = null;
+      this.user = null
+      this.token = null
 
       // Remove token from localStorage and Axios headers
-      localStorage.removeItem('token');
-      delete axios.defaults.headers.common['Authorization'];
+      localStorage.removeItem('token')
+      delete axios.defaults.headers.common['Authorization']
 
       // Redirect to the login page
-      router.push("/login");
+      router.push('/login')
     },
 
     // Check authentication status
     async checkAuth() {
       if (!this.token) {
-        this.logout();
-        return false;
+        this.logout()
+        return false
       }
 
       try {
         // Validate token with the server
-        axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
-        const response = await axios.get('http://localhost:5000/api/auth/validate');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
+        const response = await axios.get('http://localhost:5000/api/auth/validate')
 
         if (response.status === 200) {
-          this.user = response.data.user;
-          return true;
+          this.user = response.data.user
+          return true
         }
       } catch (error) {
-        console.error('Authentication validation failed:', error);
-        this.logout();
-        return false;
+        console.error('Authentication validation failed:', error)
+        this.logout()
+        return false
       }
     },
   },
-});
+})
