@@ -82,35 +82,45 @@ export default {
       userRole: null, // Stores the selected role locally
     };
   },
-  async created() {
+  methods: {
+  async verifyToken(token) {
     try {
-      const token = localStorage.getItem("token");
-
-      if (token) {
-        // Optionally validate the token
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      } else {
-        this.$router.push("/login");
-      }
+      const response = await axios.get('/api/verify-token', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return response.data.isValid;
     } catch (error) {
-      console.error("Authentication check failed:", error);
-      this.$router.push("/login");
+      console.error("Token verification failed:", error);
+      return false;
     }
   },
-  methods: {
-    selectRole(role) {
-      // Store the user's choice locally
-      this.userRole = role;
-      localStorage.setItem("userRole", role);
+  selectRole(role) {
+    this.userRole = role;
+    localStorage.setItem("userRole", role);
 
-      // Redirect based on the selected role
-      if (role === "volunteer") {
-        this.$router.push("/volunteer-dashboard");
-      } else if (role === "requester") {
-        this.$router.push("/requester-dashboard");
-      }
-    },
+    // Redirect based on the selected role
+    if (role === "volunteer") {
+      this.$router.push("/volunteer-dashboard");
+    } else if (role === "requester") {
+      this.$router.push("/requester-dashboard");
+    }
   },
+},
+async created() {
+  try {
+    const token = localStorage.getItem("token");
+
+    if (token && await this.verifyToken(token)) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      this.$router.push("/login");
+    }
+  } catch (error) {
+    console.error("Authentication check failed:", error);
+    this.$router.push("/login");
+  }
+},
+
 };
 </script>
 
