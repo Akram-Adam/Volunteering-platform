@@ -95,29 +95,6 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    // Fetch user data (protected route)
-    async fetchUserById(userId) {
-      try {
-        // Ensure token is in the headers
-        axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
-
-        // Fetch user data from the API
-        const response = await axios.get(`http://localhost:5000/api/users/${userId}`)
-
-        this.user = response.data
-        return response.data
-      } catch (error) {
-        console.error('Error fetching user by ID:', error)
-        Swal.fire({
-          icon: 'error',
-          title: 'Fetch Failed',
-          text: 'Could not fetch user data. Please log in again.',
-        })
-
-        // If the token is invalid or expired, log out
-        this.logout()
-      }
-    },
 
     // Log out
     logout(router) {

@@ -14,7 +14,7 @@ export const useUserStore = defineStore('user', {
   actions: {
     async fetchUser() {
       try {
-        const response = await axios.get('/api/user');
+        const response = await axios.get('http://localhost:5000/api/user');
         this.user = response.data;
       } catch (error) {
         console.error('Error fetching user:', error);
@@ -22,7 +22,7 @@ export const useUserStore = defineStore('user', {
     },
     async updateUser(updatedUser) {
       try {
-        const response = await axios.put('/api/user', updatedUser);
+        const response = await axios.put('http://localhost:5000/api/user', updatedUser);
       } catch (error) {
         console.error('Error updating user:', error);
       }

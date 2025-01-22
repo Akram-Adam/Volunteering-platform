@@ -43,7 +43,7 @@ if (startDate || endDate) {
       this.error = null;
 
       try {
-        const response = await axios.get('https://api.example.com/requests');
+        const response = await axios.get('http://localhost:5000/api/posts');
         this.requests = response.data;
       } catch (err) {
         this.error = 'Failed to load requests.';

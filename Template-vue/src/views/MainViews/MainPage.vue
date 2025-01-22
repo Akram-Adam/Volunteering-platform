@@ -83,17 +83,6 @@ export default {
     };
   },
   methods: {
-  async verifyToken(token) {
-    try {
-      const response = await axios.get('/api/verify-token', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      return response.data.isValid;
-    } catch (error) {
-      console.error("Token verification failed:", error);
-      return false;
-    }
-  },
   selectRole(role) {
     this.userRole = role;
     localStorage.setItem("userRole", role);
@@ -110,9 +99,10 @@ async created() {
   try {
     const token = localStorage.getItem("token");
 
-    if (token && await this.verifyToken(token)) {
+    if (token ) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     } else {
+      console.error("token check failed:", error);
       this.$router.push("/login");
     }
   } catch (error) {
