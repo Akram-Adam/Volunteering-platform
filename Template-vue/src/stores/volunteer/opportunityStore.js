@@ -8,13 +8,19 @@ export const useOpportunityStore = defineStore("opportunity", {
     opportunities: [],
     loading: false,
     error: null,
+    token: localStorage.getItem("token") || "",
   }),
+
   actions: {
     async addOpportunity(opportunity) {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.post(API_URL, opportunity);
+        const response = await axios.post(API_URL, opportunity, {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        });
         this.opportunities.push(response.data);
         return response.data;
       } catch (error) {

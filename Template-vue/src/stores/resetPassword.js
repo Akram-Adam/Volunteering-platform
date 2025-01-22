@@ -6,14 +6,23 @@ export const useAuthStore = defineStore('auth', () => {
   const isLoading = ref(false);
   const errorMessage = ref('');
   const successMessage = ref('');
+  const token = localStorage.getItem('token') || ''; // تخزين الـ token من localStorage
 
- // Function to send password reset link
+  // Function to send password reset link
   const sendResetLink = async (email) => {
     isLoading.value = true;
     errorMessage.value = ''; // Reset the error message
     successMessage.value = ''; // Reset success message
     try {
-      const response = await axios.post('http://localhost:5000/api/login', { email });
+      const response = await axios.post(
+        'http://localhost:5000/api/login',
+        { email },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // إضافة الـ token في الـ header
+          },
+        }
+      );
       successMessage.value = response.data.message; // Success message that comes from the server
     } catch (error) {
       errorMessage.value = error.response?.data?.message || 'There is a network error.';
@@ -29,7 +38,15 @@ export const useAuthStore = defineStore('auth', () => {
     successMessage.value = '';
 
     try {
-      const response = await axios.post('http://localhost:5000/api/reset-password', { token, password });
+      const response = await axios.post(
+        'http://localhost:5000/api/login',
+        { token, password },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // إضافة الـ token في الـ header
+          },
+        }
+      );
       successMessage.value = response.data.message;
     } catch (error) {
       errorMessage.value = error.response?.data?.message || 'There is a network error.';

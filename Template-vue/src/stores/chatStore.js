@@ -13,7 +13,7 @@ export const useChatStore = defineStore("chatStore", {
         this.chats[chatId] = { messages: [], loading: true };
       }
       try {
-        const response = await axios.get(`/api/chats/${chatId}/messages`);
+        const response = await axios.get(`http://localhost:5000/api/posts/${chatId}`);
         this.chats[chatId].messages = response.data;
       } catch (error) {
         console.error(`Error fetching messages for chatId ${chatId}:`, error);
@@ -24,7 +24,7 @@ export const useChatStore = defineStore("chatStore", {
     async sendMessage(chatId, message) {
       const newMessage = { text: message, sender: "requester" };
       try {
-        const response = await axios.post(`/api/chats/${chatId}/messages`, newMessage);
+        const response = await axios.post(`http://localhost:5000/api/posts/${chatId}`, newMessage);
         this.chats[chatId].messages.push(response.data);
 
      // Simulate an automatic volunteer response
@@ -33,7 +33,7 @@ export const useChatStore = defineStore("chatStore", {
             text: "Thank you for your message! A volunteer will respond shortly.",
             sender: "volunteer",
           };
-          const autoResponse = await axios.post(`/api/chats/${chatId}/messages`, autoReply);
+          const autoResponse = await axios.post(`http://localhost:5000/api/posts/${chatId}`, autoReply);
           this.chats[chatId].messages.push(autoResponse.data);
 
 //Add notification
