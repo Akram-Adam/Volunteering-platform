@@ -41,7 +41,7 @@
           />
         </div>
 
-        <!-- Message -->
+        <!-- the Message -->
         <div class="relative animate-slide-up">
           <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
           <textarea
