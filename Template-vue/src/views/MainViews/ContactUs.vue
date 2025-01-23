@@ -25,7 +25,7 @@
           />
         </div>
 
-        <!-- Email -->
+        <!-- Email of the sender -->
         <div class="relative animate-slide-right">
           <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
           <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
