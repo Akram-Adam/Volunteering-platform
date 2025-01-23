@@ -59,61 +59,6 @@ const authenticateToken = async (req, res, next) => {
   }
 };
 
-// Auth Routes
-app.post("/api/signup", async (req, res) => {
-  try {
-    const { name, email, phone, gender, password } = req.body;
-    const users = await getList("users");
-
-    if (users.find((u) => u.email === email)) {
-      return res.status(409).json({ message: "Email already exists" });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = {
-      id: Date.now().toString(),
-      name,
-      email,
-      phone,
-      gender,
-      password: hashedPassword,
-    };
-
-    users.push(newUser);
-    await saveToRedis("users", users);
-
-    res.status(201).json({ message: "User created successfully" });
-  } catch (error) {
-    console.error("Signup error:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
-app.post("/api/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const users = await getList("users");
-    const user = users.find((u) => u.email === email);
-
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: "24h" });
-    res.json({
-      token,
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-      },
-    });
-  } catch (error) {
-    console.error("Login error:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
 app.put("/api/users/profile", authenticateToken, async (req, res) => {
   try {
     const { name, phone, gender, address, dateOfBirth, interests } = req.body;
