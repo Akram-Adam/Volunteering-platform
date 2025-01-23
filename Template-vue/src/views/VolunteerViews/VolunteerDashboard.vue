@@ -1,7 +1,7 @@
 <template>
   <MainHeader />
   <div class="volunteer-dashboard min-h-screen flex bg-gray-100">
-    <!-- Sidebar -->
+    <!-- dashboard Sidebar -->
     <ToastContainer />
     <div class="w-64 bg-[#3E5879] text-white p-6">
       <div class="mb-6">
