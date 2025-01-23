@@ -1,4 +1,5 @@
 <template>
+  <!-- include the header -->
   <PageHeader />
   <div class="bg-gradient-to-r from-[#2e5487] to-[#6b8ecd] min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl w-full bg-white p-10 rounded-lg shadow-lg transform transition-transform duration-500 hover:scale-105">
