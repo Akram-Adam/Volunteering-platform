@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-export const useUserStore = defineStore('user', {
+export const useUserStore  = defineStore('user', {
   state: () => ({
     user: {
       name: '',
@@ -46,19 +46,20 @@ export const useUserStore = defineStore('user', {
     },
 
     // Update user data on the server
-    async updateUser(updatedUser) {
+     async updateUser(updatedUser) {
       this.isLoading = true;
       this.errorMessage = null;
 
       try {
         const token = localStorage.getItem('token');
+        const id = localStorage.getItem('id');
 
         if (!token) {
           throw new Error('Token not found. Please log in again.');
         }
 
         // Send the updated user data to the server
-        const response = await axios.put('http://localhost:5000/api/users/profile', updatedUser, {
+        const response = await axios.put(`http://localhost:5000/api/users/profile`,   { ...updatedUser, id :id }, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

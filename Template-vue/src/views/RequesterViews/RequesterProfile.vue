@@ -170,7 +170,12 @@ export default {
     };
 
     const updateProfile = async () => {
-      await userStore.updateUser(user.value);
+      const useuserStore = useUserStore();
+      const updatedUser = {
+        ...user.value,
+        password: password.value,
+      };
+      await useuserStore.updateUser(updatedUser);
       alert('Profile updated successfully!');
     };
 
@@ -190,6 +195,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 .hidden {
