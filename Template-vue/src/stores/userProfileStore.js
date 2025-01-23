@@ -22,13 +22,14 @@ export const useUserStore = defineStore('user', {
 
       try {
         const token = localStorage.getItem('token');
+        const id = localStorage.getItem('token');
 
         if (!token) {
           throw new Error('Token not found. Please log in again.');
         }
 
         // Send request to fetch user data
-        const response = await axios.get('http://localhost:5000/api/user', {
+        const response = await axios.get(`http://localhost:5000/api/users/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -57,7 +58,7 @@ export const useUserStore = defineStore('user', {
         }
 
         // Send the updated user data to the server
-        const response = await axios.put('http://localhost:5000/api/user', updatedUser, {
+        const response = await axios.put('http://localhost:5000/api/users/profile', updatedUser, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -77,6 +78,7 @@ export const useUserStore = defineStore('user', {
     logout() {
       // Remove the token from local storage
       localStorage.removeItem('token');
+      localStorage.removeItem('id');
 
       // Reset user data
       this.user = {

@@ -68,12 +68,14 @@ export const useAuthStore = defineStore('auth', {
         const response = await axios.post('http://localhost:5000/api/login', credentials)
         const { user, token } = response.data
 
-        if (user && token) {
+        if (user && token && user.id) {
           this.user = user
           this.token = token
+          this.user.id = user.id
 
           // Save the token to localStorage
           localStorage.setItem('token', token)
+          localStorage.setItem('id', user.id)
 
           // Set the token in the headers for future requests
           axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
