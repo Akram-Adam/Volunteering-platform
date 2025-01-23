@@ -1,4 +1,5 @@
 <template>
+   <!-- include the default header -->
   <PageHeader />
   <div class="about-us bg-gradient-to-br from-purple-400 via-blue-500 to-indigo-600 py-12 px-4 text-white">
     <!-- the Introduction Section -->
