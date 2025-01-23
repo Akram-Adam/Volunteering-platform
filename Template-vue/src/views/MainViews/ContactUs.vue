@@ -9,7 +9,7 @@
       </p>
 
       <form @submit.prevent="handleSubmit" class="space-y-8">
-        <!-- Name -->
+        <!-- Name of the sender-->
         <div class="relative animate-slide-left">
           <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
           <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
