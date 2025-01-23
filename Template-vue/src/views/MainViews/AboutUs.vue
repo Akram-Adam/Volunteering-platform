@@ -1,7 +1,7 @@
 <template>
   <PageHeader />
   <div class="about-us bg-gradient-to-br from-purple-400 via-blue-500 to-indigo-600 py-12 px-4 text-white">
-    <!-- Introduction Section -->
+    <!-- the Introduction Section -->
     <div class="text-center mb-12 animate-fade-in">
       <h1 class="text-5xl font-bold mb-4 transition-transform duration-500 hover:scale-110">
         Meet Our Team
