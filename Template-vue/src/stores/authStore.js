@@ -34,7 +34,7 @@ export const useAuthStore = defineStore('auth', {
         })
 
         // If the response was successful
-        if (response.status === 200) {
+        if (response.status === 200  || 201 || 204) {
           Swal.fire({
             icon: 'success',
             title: 'Sign-up Successful!',
@@ -43,8 +43,13 @@ export const useAuthStore = defineStore('auth', {
           })
 
           // Redirect to the login page
-          router.push('/main-page')
+          if (router) {
+            router.push('/login')
+          } else {
+            console.error('Router is not defined!')
+          }
         }
+
       } catch (error) {
         Swal.fire({
           icon: 'error',

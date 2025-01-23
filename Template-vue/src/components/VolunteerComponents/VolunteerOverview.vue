@@ -18,7 +18,6 @@
         </div>
       </div>
 
-      <!-- عرض الفرص الحديثة -->
       <div class="bg-white p-6 shadow rounded-lg">
         <h3 class="text-xl font-semibold mb-4">Modern opportunities</h3>
         <table class="w-full border-collapse">

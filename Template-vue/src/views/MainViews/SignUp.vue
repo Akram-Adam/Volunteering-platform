@@ -117,7 +117,7 @@ export default {
       };
 
 // Call action to register the user
-      authStore.signUp(userData)
+      authStore.signUp(userData , router)
     };
     return { name, email, phone, gender, password, confirmPassword, handleSignUp };
   },
