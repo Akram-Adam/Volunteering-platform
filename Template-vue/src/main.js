@@ -1,0 +1,28 @@
+import './assets/main.css';
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import App from './App.vue';
+import router from './router';
+
+// Import Font Awesome Core
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+// Import Specific Icons
+import { faGauge, faCalendar, faEnvelope, faUser, faPlus } from '@fortawesome/free-solid-svg-icons';
+
+// Add icons to the library
+library.add(faGauge, faCalendar, faEnvelope, faUser, faPlus);
+
+const app = createApp(App);
+
+app.use(createPinia());
+app.use(router);
+
+//axios.defaults.baseURL = 'https://your-api-url.com'; // Set your API base URL
+//axios.defaults.headers.common['Authorization'] = `Bearer ${yourToken}`; // Set any required token
+
+// Register FontAwesomeIcon globally
+app.component('font-awesome-icon', FontAwesomeIcon);
+
+app.mount('#app');
