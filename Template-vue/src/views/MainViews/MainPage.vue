@@ -17,15 +17,15 @@
         <ul class="space-y-4 text-gray-700">
           <li class="flex items-start">
             <span class="inline-block w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center mr-4">1</span>
-            Sign up and create your profile as a volunteer.
+            Sign up and create your profile .
           </li>
           <li class="flex items-start">
             <span class="inline-block w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center mr-4">2</span>
-            Browse opportunities that match your interests and skills.
+            Post opportunities that match your interests and skills.
           </li>
           <li class="flex items-start">
             <span class="inline-block w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center mr-4">3</span>
-            Apply for opportunities and get connected with requesters.
+            Accept Requested opportunities and get connected with requesters.
           </li>
         </ul>
       </div>
