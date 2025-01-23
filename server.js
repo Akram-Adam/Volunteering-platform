@@ -10,13 +10,6 @@ const app = express();
 const PORT = 5000;
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
-// Redis client setup
-const redis = new Redis({
-  port: 6379,
-  host: "127.0.0.1",
-  // password: process.env.REDIS_PASSWORD, // Uncomment if you have password
-});
-
 // Handle Redis connection errors
 redis.on("error", (error) => {
   console.error("Redis connection error:", error);
