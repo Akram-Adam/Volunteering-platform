@@ -2,7 +2,7 @@
   <div class="max-w-4xl mx-auto p-6">
     <h1 class="text-2xl font-bold mb-4">Profile</h1>
     <div class="bg-white shadow rounded-lg p-6">
-      <!-- Profile Picture at the Top -->
+      <!-- place Profile Picture at the Top -->
       <div class="flex flex-col items-center mb-6">
         <img
           v-if="user.profilePicture"
