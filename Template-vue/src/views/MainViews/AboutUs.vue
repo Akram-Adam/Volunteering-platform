@@ -13,7 +13,7 @@
 
     <!-- Team Section -->
     <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      <!-- Team Member Card -->
+      <!-- Team Member Cards -->
       <div
         v-for="member in teamMembers"
         :key="member.name"
