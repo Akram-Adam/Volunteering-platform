@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const cors = require("cors");
 const Redis = require("ioredis");
+require("dotenv").config();
 
 const app = express();
 const PORT = 5000;
