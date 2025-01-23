@@ -68,20 +68,17 @@
             <p><strong>Contact (Email):</strong> {{ request.email }}</p>
             <p><strong>Message:</strong> {{ request.message }}</p>
             <div class="flex justify-end mt-4 space-x-4">
-              <button
+
+
+            </div>
+          </li>
+          <button
                 @click="opportunitiesStore.closeOpportunity"
                 class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
               >
                 Close
               </button>
-              <button
-                @click="opportunitiesStore.acceptRequest(opportunitiesStore.selectedOpportunity.id, request.id)"
-                class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-              >
-                Accept
-              </button>
-            </div>
-          </li>
+
         </ul>
       </div>
     </div>

@@ -2,10 +2,12 @@
   <MainHeader />
   <div class="volunteer-dashboard min-h-screen flex bg-gray-100">
     <!-- Sidebar -->
+    <ToastContainer />
     <div class="w-64 bg-[#3E5879] text-white p-6">
       <div class="mb-6">
         <h2 class="text-2xl font-bold">Volunteer Dashboard</h2>
       </div>
+
       <ul class="space-y-4">
         <li>
           <router-link
@@ -101,7 +103,9 @@
 <script>
 import MainHeader from '@/components/GeneralComponents/MainHeader.vue';
 import MessageComponent from "@/components/GeneralComponents/MessageComponent.vue";
-import { useUserStore } from '@/stores/userStore'; // Import the store
+import { useUserStore } from '@/stores/userStore';
+import { toast } from 'vue3-toastify';
+
 export default {
   name: "VolunteerDashboard",
   components: {
@@ -117,6 +121,17 @@ export default {
         { text: "I need help with an upcoming event.", sender: "requester" },
       ],
     };
+  },
+  mounted() {
+
+    const message = localStorage.getItem("notificationMessage");
+
+    if (message) {
+
+      toast.success(message);
+
+      localStorage.removeItem("notificationMessage");
+    }
   },
   computed: {
     user() {

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import { toast } from 'vue3-toastify';
 
 const API_URL = "http://localhost:5000/api/posts";
 
@@ -22,10 +23,12 @@ export const useOpportunitiesStore = defineStore('opportunities', {
           },
         });
         this.opportunities.push(response.data);
+        toast.success("Opportunity added successfully!");
         return response.data;
       } catch (error) {
         console.error("Error adding opportunity:", error);
         this.error = error.response?.data?.message || "An error occurred.";
+        toast.error(this.error);
         throw error;
       } finally {
         this.loading = false;
@@ -41,9 +44,11 @@ export const useOpportunitiesStore = defineStore('opportunities', {
           },
         });
         this.opportunities = response.data;
+      //  toast.success("Opportunities fetched successfully!");
       } catch (error) {
         console.error('Error fetching opportunities:', error);
         this.error = error.response?.data?.message || "An error occurred.";
+        toast.error(this.error);
       } finally {
         this.loading = false;
       }
@@ -57,32 +62,22 @@ export const useOpportunitiesStore = defineStore('opportunities', {
           },
         });
         this.opportunities = this.opportunities.filter((opportunity) => opportunity.id !== id);
+        toast.success("Opportunity deleted successfully!");
       } catch (error) {
         console.error('Error deleting opportunity:', error);
         this.error = error.response?.data?.message || "An error occurred.";
+        toast.error(this.error);
       }
     },
 
-   /*  async acceptRequest(opportunityId, requestId) {
-      try {
-        await axios.post(`${API_URL}/${opportunityId}/requests/${requestId}/accept`, null, {
-          headers: {
-            Authorization: `Bearer ${this.token}`,
-          },
-        });
-        alert('Request accepted successfully!');
-      } catch (error) {
-        console.error('Error accepting request:', error);
-        this.error = error.response?.data?.message || "An error occurred.";
-      }
-    },*/
-
     selectOpportunity(opportunity) {
       this.selectedOpportunity = opportunity;
+      toast.info(`Selected opportunity: ${opportunity.title}`);
     },
 
     closeOpportunity() {
       this.selectedOpportunity = null;
+      toast.info("Opportunity selection cleared.");
     },
   },
 });

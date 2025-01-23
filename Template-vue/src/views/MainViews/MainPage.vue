@@ -65,12 +65,14 @@
         I Need Help
       </button>
     </div>
+    <ToastContainer />
   </div>
 </template>
 
 <script>
 import MainHeader from '@/components/GeneralComponents/MainHeader.vue'; // Import the header
 import axios from 'axios'; // Import Axios
+import { toast } from 'vue3-toastify'; // Import toast
 
 export default {
   name: "HowItWorks",
@@ -83,34 +85,40 @@ export default {
     };
   },
   methods: {
-  selectRole(role) {
-    this.userRole = role;
-    localStorage.setItem("userRole", role);
+    selectRole(role) {
+      this.userRole = role;
+      localStorage.setItem("userRole", role);
 
-    // Redirect based on the selected role
-    if (role === "volunteer") {
-      this.$router.push("/volunteer-dashboard");
-    } else if (role === "requester") {
-      this.$router.push("/requester-dashboard");
-    }
+      // save a success notification in localStorage
+      localStorage.setItem(
+        "notificationMessage",
+        `You have selected: ${role === "volunteer" ? "Volunteer" : "Requester"}`
+      );
+
+        // Redirect based on the selected role
+      if (role === "volunteer") {
+        this.$router.push("/volunteer-dashboard");
+      } else if (role === "requester") {
+        this.$router.push("/requester-dashboard");
+      }
+    },
   },
-},
-async created() {
-  try {
-    const token = localStorage.getItem("token");
+  async created() {
+    try {
+      const token = localStorage.getItem("token");
 
-    if (token ) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    } else {
-      console.error("token check failed:", error);
+      if (token) {
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      } else {
+        toast.error("Authentication failed. Redirecting to login.");
+        this.$router.push("/login");
+      }
+    } catch (error) {
+      console.error("Authentication check failed:", error);
+      toast.error("Authentication error occurred. Redirecting to login.");
       this.$router.push("/login");
     }
-  } catch (error) {
-    console.error("Authentication check failed:", error);
-    this.$router.push("/login");
-  }
-},
-
+  },
 };
 </script>
 

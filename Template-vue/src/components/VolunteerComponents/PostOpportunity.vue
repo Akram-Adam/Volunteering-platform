@@ -97,12 +97,16 @@
 <script>
 import { useOpportunityStore } from "@/stores/volunteer/opportunityStore.js";
 import { reactive } from "vue";
+import { toast } from "vue3-toastify"; // Import the toast function for notifications
+import "vue3-toastify/dist/index.css"; // Import the library's styles
 
 export default {
   name: "PostOpportunity",
   setup() {
+    // Access the store for managing volunteer opportunities
     const opportunityStore = useOpportunityStore();
 
+    // Define the reactive object for the opportunity form data
     const opportunity = reactive({
       title: "",
       description: "",
@@ -112,26 +116,54 @@ export default {
       maxRequesters: 1,
     });
 
+    // Function to handle the submission of the volunteer opportunity
     const submitOpportunity = async () => {
       try {
+        // Call the store method to add the opportunity
         await opportunityStore.addOpportunity(opportunity);
-        alert("Volunteer opportunity added!");
-        // Redirect to another page
-        window.location.href = "/volunteer-dashboard";
+
+        // Display a success notification
+        toast.success("Volunteer opportunity added!", {
+          position: "top-right", // Position of the toast on the screen
+          autoClose: 3000, // Automatically close after 3 seconds
+          hideProgressBar: false, // Show the progress bar
+          closeOnClick: true, // Close the toast when clicked
+          pauseOnHover: true, // Pause the timer when hovering over the toast
+          draggable: true, // Allow the toast to be dragged
+        });
+
+        // Redirect to another page after a short delay (to allow time to read the toast)
+        setTimeout(() => {
+          window.location.href = "/volunteer-dashboard";
+        }, 3000); // 3 seconds delay
       } catch (error) {
+        // Display an error notification if the submission fails
+        toast.error("Failed to add opportunity. Please try again.", {
+          position: "top-right",
+          autoClose: 5000, // Automatically close after 5 seconds
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+
+        // Log the error for debugging purposes
         console.error("Submission failed:", error);
       }
     };
 
+    // Return the reactive data and methods to the template
     return {
       opportunity,
       submitOpportunity,
-      loading: opportunityStore.loading,
-      error: opportunityStore.error,
+      loading: opportunityStore.loading, // Loading state from the store
+      error: opportunityStore.error, // Error state from the store
     };
   },
 };
 </script>
+
+
 
 <style scoped>
 .post-opportunity-page {

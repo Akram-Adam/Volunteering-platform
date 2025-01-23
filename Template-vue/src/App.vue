@@ -3,6 +3,7 @@
     <main class="flex-1">
     <RouterView />
     </main>
+    <ToastContainer />
     <!-- Include the footer component -->
     <PageFooter />
   </div>
