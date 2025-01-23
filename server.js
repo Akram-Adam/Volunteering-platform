@@ -26,16 +26,6 @@ redis.on("error", (error) => {
 app.use(cors());
 app.use(express.json());
 
-// Redis helper functions
-async function saveToRedis(key, data) {
-  await redis.set(key, JSON.stringify(data));
-}
-
-async function getFromRedis(key) {
-  const data = await redis.get(key);
-  return data ? JSON.parse(data) : null;
-}
-
 async function getList(key) {
   const data = await redis.get(key);
   return data ? JSON.parse(data) : [];
