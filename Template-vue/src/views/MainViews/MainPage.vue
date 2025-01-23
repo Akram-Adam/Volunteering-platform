@@ -36,15 +36,15 @@
         <ul class="space-y-4 text-gray-700">
           <li class="flex items-start">
             <span class="inline-block w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center mr-4">1</span>
-            Sign up and create your profile as a requester.
+            Sign up and create your profile .
           </li>
           <li class="flex items-start">
             <span class="inline-block w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center mr-4">2</span>
-            Post a request for help or browse available volunteers.
+            Browse available opportunities posted by volunteers .
           </li>
           <li class="flex items-start">
             <span class="inline-block w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center mr-4">3</span>
-            Connect with volunteers and get the help you need.
+            Submit Your Request and Connect with volunteers to get the help you need.
           </li>
         </ul>
       </div>
