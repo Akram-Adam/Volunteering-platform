@@ -1,7 +1,7 @@
 <template>
   <div class="landing-page">
     <PageHeader />
-<!-- Main Section (Hero Section) -->
+<!-- Main Section (The Hero Section) -->
      <section class="hero-section bg-[#213555] text-[#F5EFE7] text-center py-20 relative">
       <div class="absolute inset-0 bg-add-image bg-cover opacity-50"></div>
       <div class="container mx-auto relative">
