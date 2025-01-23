@@ -1,3 +1,0 @@
-# Volunteering-platform
-Volunteering platform
-
