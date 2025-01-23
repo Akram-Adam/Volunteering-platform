@@ -11,7 +11,7 @@
 
     <!-- Steps Section -->
     <div class="steps grid grid-cols-1 md:grid-cols-2 gap-10 max-w-6xl w-full">
-      <!-- Volunteer Steps -->
+      <!-- Volunteers Steps -->
       <div class="bg-white rounded-lg shadow-md p-8">
         <h2 class="text-2xl font-bold text-blue-600 mb-6">For Volunteers</h2>
         <ul class="space-y-4 text-gray-700">
