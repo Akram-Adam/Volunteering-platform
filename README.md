@@ -52,9 +52,9 @@ Welcome to the "Linking Volunteers to Those in Need" platform! This project is d
 
 ## Architecture :
         1.	Frontend:
-                o	Technology: Vue 3 (JavaScript Framework)
-                o	Build Tool: Vite
-                o	Styling: Tailwind CSS
+                o Technology: Vue 3 (JavaScript Framework)
+                o Build Tool: Vite
+                o Styling: Tailwind CSS
         2.	Backend:
                 o	Technology: Node.js with Express.js
                 o	Database: Redis
@@ -84,6 +84,13 @@ Welcome to the "Linking Volunteers to Those in Need" platform! This project is d
 ## Challenges Faced
         1.Role-Based Redirection Complexity:
                 Designing a seamless experience for users with multiple roles required extensive testing.
+        2.Frontend-Backend Synchronization:
+                Ensuring smooth communication between the frontend and backend during early integration phases.
+        3.Real-Time Feedback:
+                Implementing live updates for user interactions posed technical challenges.
+        4.Design Iterations:
+                Achieving a balance between simplicity and functionality required multiple refinements.
+
 ## How it works:
         1- Clone Github Repository: https://github.com/Akram-Adam/Volunteering-platform.git
         2- npm install
