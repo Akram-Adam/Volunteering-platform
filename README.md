@@ -80,6 +80,7 @@ Welcome to the "Linking Volunteers to Those in Need" platform! This project is d
         Dynamic Role Assignment:
                 Users can switch between roles from their dashboard.
                 Manage requests and opportunities within a single account.
+## Challenges Faced
                 
 ## How it works:
         1- Clone Github Repository: https://github.com/Akram-Adam/Volunteering-platform.git
