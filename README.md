@@ -52,19 +52,19 @@ Welcome to the "Linking Volunteers to Those in Need" platform! This project is d
 
 ## Architecture :
         1.	Frontend:
-                o Technology: Vue 3 (JavaScript Framework)
-                o Build Tool: Vite
-                o Styling: Tailwind CSS
+                        o Technology: Vue 3 (JavaScript Framework)
+                        o Build Tool: Vite
+                        o Styling: Tailwind CSS
         2.	Backend:
-                o	Technology: Node.js with Express.js
-                o	Database: Redis
+                        o Technology: Node.js with Express.js
+                        o Database: Redis
         3.	API Integration:
-                o	Communication between the frontend and backend is achieved using RESTful APIs.
+                        o Communication between the frontend and backend is achieved using RESTful APIs.
         4.	Authentication and Security:
-                o	JWT (JSON Web Tokens)
+                        o JWT (JSON Web Tokens)
         5.	Third-Party Services:
-                o	SweetAlert2: For user-friendly alerts and notifications on the frontend.
-                o	Cloud Hosting: Digital Ocean
+                        o SweetAlert2: For user-friendly alerts and notifications on the frontend.
+                        o Cloud Hosting: Digital Ocean
 
 ## Roles and Functionalities
         Volunteer:
