@@ -227,38 +227,6 @@ app.post("/api/posts", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-app.post("/api/posts", authenticateToken, async (req, res) => {
-  try {
-    const {
-      title,
-      content,
-      category,
-      availability,
-      location,
-      maximumRequests,
-    } = req.body;
-
-    const posts = await getList("posts");
-    const newPost = {
-      id: Date.now().toString(),
-      title,
-      content,
-      userId: req.user.id,
-      createdAt: new Date().toISOString(),
-      category,
-      availability: availability ? new Date(availability).toISOString() : null,
-      location,
-      maximumRequests: maximumRequests || null,
-    };
-
-    posts.push(newPost);
-    await saveToRedis("posts", posts);
-    res.status(201).json(newPost);
-  } catch (error) {
-    console.error("Create post error:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
 
 app.put("/api/posts/:id", authenticateToken, async (req, res) => {
   try {
