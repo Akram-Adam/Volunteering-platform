@@ -95,6 +95,13 @@ Welcome to the "Linking Volunteers to Those in Need" platform! This project is d
         1- Clone Github Repository: https://github.com/Akram-Adam/Volunteering-platform.git
         2- npm install
         3- install redis server for database
+        steps to spin the server:
+           1. git clone https://github.com/A1iHassan/tester.git
+           2. npm install
+           3. sudo apt update && sudo apt install redis
+           4. sudo systemctl start redis
+           5. cd temp2
+           6. node server.js
 
 # Thank You
 We appreciate your interest in "Linking Volunteers to Those in Need". Together, we can create meaningful community connections and make a difference!
