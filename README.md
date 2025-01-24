@@ -66,6 +66,12 @@ o	JWT (JSON Web Tokens)
 o	SweetAlert2: For user-friendly alerts and notifications on the frontend.
 o	Cloud Hosting: Digital Ocean
 
+## Roles and Functionalities
+        Volunteer:
+                Post opportunities with details like title, description, category, location, availability, and participant         limits.
+                Manage posts: edit, update, or delete opportunities.
+                Approve or decline requests from requesters.
+
 ## How it works:
         1- Clone Github Repository: https://github.com/Akram-Adam/Volunteering-platform.git
         2- npm install
