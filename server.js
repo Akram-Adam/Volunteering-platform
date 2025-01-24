@@ -260,6 +260,47 @@ app.post("/api/posts", authenticateToken, async (req, res) => {
   }
 });
 
+app.put("/api/posts/:id", authenticateToken, async (req, res) => {
+  try {
+    const {
+      title,
+      content,
+      category,
+      availability,
+      location,
+      maximumRequests,
+    } = req.body;
+    const posts = await getList("posts");
+    const postIndex = posts.findIndex((p) => p.id === req.params.id);
+
+    if (postIndex === -1) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    if (posts[postIndex].userId !== req.user.id) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    posts[postIndex] = {
+      ...posts[postIndex],
+      title: title || posts[postIndex].title,
+      content: content || posts[postIndex].content,
+      category: category || posts[postIndex].category,
+      availability: availability
+        ? new Date(availability).toISOString()
+        : posts[postIndex].availability,
+      location: location || posts[postIndex].location,
+      maximumRequests: maximumRequests || posts[postIndex].maximumRequests,
+    };
+
+    await saveToRedis("posts", posts);
+    res.json(posts[postIndex]);
+  } catch (error) {
+    console.error("Update post error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 app.delete("/api/posts/:id", authenticateToken, async (req, res) => {
   try {
     const posts = await getList("posts");
