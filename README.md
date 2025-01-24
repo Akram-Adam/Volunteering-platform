@@ -1,18 +1,21 @@
 # Volunteering-platform
 Volunteering platform
 
-Project Description:
+## Project Description:
 The volunteering platform is a web-based application designed to facilitate connections between individuals offering services and those in need
 
-Team Members:
-    Name           Role            Email
-1- Assma Hamad   FrontEnd    assma.hm89@gmail.com
+## Team Members:
+        Name           Role            Email
+    1- Assma Hamad   FrontEnd    assma.hm89@gmail.com
 
-2- Akram adam    FrontEnd     akramadam050@gmail.com
+    2- Akram adam    FrontEnd     akramadam050@gmail.com
 
-3- Ali Hassan    BackEnd      ali012wkout@gmail.com
+    3- Ali Hassan    BackEnd      ali012wkout@gmail.com
 
-4- Mahmoud Adam  BackEnd      Mahmoudadam5555@gmail.com
+    4- Mahmoud Adam  BackEnd      Mahmoudadam5555@gmail.com
+
+## Introduction
+Welcome to the "Linking Volunteers to Those in Need" platform! This project is designed to bridge the gap between volunteers offering services and individuals seeking support, fostering a sense of community and empowerment. This README provides an overview of the project, its architecture, functionality, and essential usage guidelines.
 
 Architecture :
 1.	Frontend:
