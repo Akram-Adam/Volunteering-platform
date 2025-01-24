@@ -12,7 +12,7 @@ The volunteering platform is a web-based application designed to facilitate conn
 
     3- Ali Hassan    BackEnd      ali012wkout@gmail.com
 
-    4- Mahmoud Adam  BackEnd      Mahmoudadam5555@gmail.com
+    4- Mahmoud Adam  BackEnd      mahmoudadam5555@gmail.com
 
 ## Introduction
 Welcome to the "Linking Volunteers to Those in Need" platform! This project is designed to bridge the gap between volunteers offering services and individuals seeking support, fostering a sense of community and empowerment. This README provides an overview of the project, its architecture, functionality, and essential usage guidelines.
@@ -72,6 +72,15 @@ o	Cloud Hosting: Digital Ocean
                 Manage posts: edit, update, or delete opportunities.
                 Approve or decline requests from requesters.
 
+        Requester:
+                Browse opportunities by category, location, or availability.
+                Submit requests for services.
+                Track request status: pending, approved, or declined.
+
+        Dynamic Role Assignment:
+                Users can switch between roles from their dashboard.
+                Manage requests and opportunities within a single account.
+                
 ## How it works:
         1- Clone Github Repository: https://github.com/Akram-Adam/Volunteering-platform.git
         2- npm install
