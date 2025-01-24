@@ -85,3 +85,5 @@ o	Cloud Hosting: Digital Ocean
         1- Clone Github Repository: https://github.com/Akram-Adam/Volunteering-platform.git
         2- npm install
         3- install redis server for database
+# Thank You
+We appreciate your interest in "Linking Volunteers to Those in Need". Together, we can create meaningful community connections and make a difference!
