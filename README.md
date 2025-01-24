@@ -51,20 +51,20 @@ Welcome to the "Linking Volunteers to Those in Need" platform! This project is d
                 Role-based access ensures data integrity.
 
 ## Architecture :
-1.	Frontend:
-o	Technology: Vue 3 (JavaScript Framework)
-o	Build Tool: Vite
-o	Styling: Tailwind CSS
-2.	Backend:
-o	Technology: Node.js with Express.js
-o	Database: Redis
-3.	API Integration:
-o	Communication between the frontend and backend is achieved using RESTful APIs.
-4.	Authentication and Security:
-o	JWT (JSON Web Tokens)
-5.	Third-Party Services:
-o	SweetAlert2: For user-friendly alerts and notifications on the frontend.
-o	Cloud Hosting: Digital Ocean
+        1.	Frontend:
+                o	Technology: Vue 3 (JavaScript Framework)
+                o	Build Tool: Vite
+                o	Styling: Tailwind CSS
+        2.	Backend:
+                o	Technology: Node.js with Express.js
+                o	Database: Redis
+        3.	API Integration:
+                o	Communication between the frontend and backend is achieved using RESTful APIs.
+        4.	Authentication and Security:
+                o	JWT (JSON Web Tokens)
+        5.	Third-Party Services:
+                o	SweetAlert2: For user-friendly alerts and notifications on the frontend.
+                o	Cloud Hosting: Digital Ocean
 
 ## Roles and Functionalities
         Volunteer:
@@ -85,5 +85,6 @@ o	Cloud Hosting: Digital Ocean
         1- Clone Github Repository: https://github.com/Akram-Adam/Volunteering-platform.git
         2- npm install
         3- install redis server for database
+
 # Thank You
 We appreciate your interest in "Linking Volunteers to Those in Need". Together, we can create meaningful community connections and make a difference!
