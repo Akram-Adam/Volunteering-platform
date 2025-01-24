@@ -114,6 +114,41 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
+app.put("/api/users/profile", authenticateToken, async (req, res) => {
+  try {
+    const { name, phone, gender, address, dateOfBirth, interests } = req.body;
+    const users = await getList("users");
+
+    const userIndex = users.findIndex((u) => u.id === req.user.id);
+
+    if (userIndex === -1) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update user profile with new/additional fields
+    users[userIndex] = {
+      ...users[userIndex],
+      name: name || users[userIndex].name,
+      phone: phone || users[userIndex].phone,
+      gender: gender || users[userIndex].gender,
+      address: address || users[userIndex].address,
+      dateOfBirth: dateOfBirth || users[userIndex].dateOfBirth,
+      interests: interests || users[userIndex].interests,
+    };
+
+    // Save updated user list
+    await saveToRedis("users", users);
+
+    // Return updated user profile (excluding sensitive info like password)
+    const { password, ...updatedUserProfile } = users[userIndex];
+
+    res.json(updatedUserProfile);
+  } catch (error) {
+    console.error("Update profile error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 app.get("/api/users/:id", authenticateToken, async (req, res) => {
   try {
     const users = await getList("users");
