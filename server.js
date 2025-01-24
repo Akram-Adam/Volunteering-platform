@@ -179,22 +179,6 @@ app.get("/api/posts", async (req, res) => {
   }
 });
 
-app.get("/api/posts/:id", async (req, res) => {
-  try {
-    const posts = await getList("posts");
-    const post = posts.find((p) => p.id === req.params.id);
-
-    if (!post) {
-      return res.status(404).json({ message: "Post not found" });
-    }
-
-    res.json(post);
-  } catch (error) {
-    console.error("Get post error:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
 app.post("/api/posts", authenticateToken, async (req, res) => {
   try {
     const {
