@@ -68,7 +68,7 @@ Welcome to the "Linking Volunteers to Those in Need" platform! This project is d
 
 ## Roles and Functionalities
         Volunteer:
-                Post opportunities with details like title, description, category, location, availability, and participant         limits.
+                Post opportunities with details like title, description, category, location, availability, and participant limits.
                 Manage posts: edit, update, or delete opportunities.
                 Approve or decline requests from requesters.
 
@@ -80,8 +80,10 @@ Welcome to the "Linking Volunteers to Those in Need" platform! This project is d
         Dynamic Role Assignment:
                 Users can switch between roles from their dashboard.
                 Manage requests and opportunities within a single account.
+
 ## Challenges Faced
-                
+        1.Role-Based Redirection Complexity:
+                Designing a seamless experience for users with multiple roles required extensive testing.
 ## How it works:
         1- Clone Github Repository: https://github.com/Akram-Adam/Volunteering-platform.git
         2- npm install
