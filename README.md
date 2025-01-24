@@ -17,6 +17,19 @@ The volunteering platform is a web-based application designed to facilitate conn
 ## Introduction
 Welcome to the "Linking Volunteers to Those in Need" platform! This project is designed to bridge the gap between volunteers offering services and individuals seeking support, fostering a sense of community and empowerment. This README provides an overview of the project, its architecture, functionality, and essential usage guidelines.
 
+# Key Features
+        ## 1.Volunteer Opportunities:
+                Volunteers can post, manage, and track opportunities.
+                Requesters can browse and request services seamlessly.
+        ## 2.Dynamic Role Management:
+                Users can switch between "Volunteer" and "Requester" roles without creating multiple accounts.
+        ## 3.Streamlined Collaboration:
+                Role-based dashboards for efficient service exchange.
+                Notification system for real-time updates.
+        ## 4.Authentication and Security:
+                Secure login using JSON Web Tokens (JWT) and bcrypt for password hashing.
+                Role-specific access control.
+
 Architecture :
 1.	Frontend:
 o	Technology: Vue 3 (JavaScript Framework)
