@@ -66,7 +66,7 @@ o	JWT (JSON Web Tokens)
 o	SweetAlert2: For user-friendly alerts and notifications on the frontend.
 o	Cloud Hosting: Digital Ocean
 
-How it works:
-1- Clone Github Repository: https://github.com/Akram-Adam/Volunteering-platform.git
-2- npm install
-3- install redis server for database
+## How it works:
+        1- Clone Github Repository: https://github.com/Akram-Adam/Volunteering-platform.git
+        2- npm install
+        3- install redis server for database
